@@ -14,9 +14,15 @@ def get_data():
 
 @app.route('/api/post_data', methods=['POST'])
 def post_data():
-    # receive data from the React frontend
     data = request.get_json()
     return data
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if data["user"] == "admin" and data["pass"] == "admin":
+        return jsonify(True)
+    return jsonify(False)
 
 if __name__ == '__main__':
     app.run(debug=True)
