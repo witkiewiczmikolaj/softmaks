@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "./Navbar.css";
 
 function Navbar() {
-const [data, setData] = useState();
+  const [data, setData] = useState();
 
   useEffect(() => {
     async function fetchData() {

@@ -5,7 +5,7 @@ def email_check(email):
         return 'error'
     else:
         cur = psql_connect()
-        cur.execute(f"SELECT email FROM ACCOUNTS WHERE email = '{email}'")
+        cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
         emails_sql = cur.fetchone()
         if not emails_sql:
             return False
@@ -17,7 +17,7 @@ def check_pass(email, password_arg):
         return 'error'
     else:
         cur = psql_connect()
-        cur.execute(f"SELECT password FROM ACCOUNTS WHERE email = '{email}'")
+        cur.execute(f"SELECT password FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
         password = cur.fetchall()
         if password[0][0] == password_arg:
             return True

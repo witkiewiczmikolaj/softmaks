@@ -29,7 +29,7 @@ def post_data():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    return jsonify(True)#jsonify(log_in(data))
+    return jsonify(log_in(data))
 
 if __name__ == '__main__':
     app.run(debug=True)
