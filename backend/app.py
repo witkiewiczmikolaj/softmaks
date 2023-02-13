@@ -27,6 +27,12 @@ def get_user_data():
     data = request.get_json()
     return jsonify(user_data(data))
 
+@app.route('/api/update_user_data', methods=['POST'])
+@cross_origin()
+def update_user_data():
+    data = request.get_json()
+    return jsonify(update_user(data))
+
 @app.route('/api/post_data', methods=['POST'])
 def post_data():
     data = request.get_json()

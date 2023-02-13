@@ -2,20 +2,22 @@ import React from "react";
 import "./ModalEdit.css";
 
 function ModalEditSecond(props) {
-
-    
-/*
-    const [projects, setProjects] = useState();
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('http://localhost:5000/api/get_user');
-            const projects = await response.json();
-            setProjects(projects);
+const data_props = [props.uname, props.usurname, props.password, props.age, props.sex, props.email, props.number]
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+        const response = await fetch('http://localhost:5000/api/update_user_data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({data: data_props}),
+        });
+        const data = await response.json();
+        console.log(data)
+        props.closeModal2(false)
+        } catch (error) {
+            console.error(error);
         }
-        fetchData();
-      }, []);
-*/
+    };
     return (
         <div className="modal_bg">  
             <div className="modal_container">
@@ -62,7 +64,7 @@ function ModalEditSecond(props) {
                         <div className="footer">
                             <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                             <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>
-                            <button type="submit" onClick={() => props.closeModal2(false)}>Dalej</button>
+                            <button type="submit" onClick={handleSubmit}>Dalej</button>
                         </div> 
                     </form>
                 </div>

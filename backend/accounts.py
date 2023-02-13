@@ -4,7 +4,7 @@ def email_check(email):
     if psql_connect() == 'error':
         return 'error'
     else:
-        cur = psql_connect()
+        cur, c = psql_connect()
         cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
         emails_sql = cur.fetchone()
         if not emails_sql:
@@ -16,7 +16,7 @@ def check_pass(email, password_arg):
     if psql_connect() == 'error':
         return 'error'
     else:
-        cur = psql_connect()
+        cur, c = psql_connect()
         cur.execute(f"SELECT password FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
         password = cur.fetchall()
         if password[0][0] == password_arg:
@@ -43,7 +43,20 @@ def user_data(data):
     if psql_connect() == 'error':
         return 'error'
     else:
-        cur = psql_connect()
+        cur, c = psql_connect()
         cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
         data = cur.fetchall()
         return data
+
+def update_user(data):
+    data = data["data"]
+    if psql_connect() == 'error':
+        return 'error'
+    else:
+        cur, c = psql_connect()
+        try:
+            cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[5]}';")
+            c.commit()
+        except psycopg2.errors.CheckViolation:
+            return 'violation'
+        return True
