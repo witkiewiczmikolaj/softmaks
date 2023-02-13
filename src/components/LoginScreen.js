@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./LoginScreen.css";
 
-function LoginScreen() {
+function LoginScreen(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState(null);
@@ -16,19 +16,32 @@ function LoginScreen() {
             setPassword(e.target.value);
     };
 
+    function set_data(input){
+        props.data(input)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-        const response = await fetch('http://localhost:5000/login', {
+        const response_login = await fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email: email, pass: password}),
         });
-        const data = await response.json();
-        if (data === true) {
+        const login = await response_login.json();
+
+        const response_data = await fetch('http://localhost:5000/api/get_user_data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({email: email}),
+        });
+        const data = await response_data.json();
+        
+        if (login === true) {
             navigate('/home');
+            set_data(data);
         } else {
-            setResponse(data);
+            setResponse(login);
         }} catch (error) {
             console.error(error);
         }

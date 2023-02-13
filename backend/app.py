@@ -21,6 +21,12 @@ def get_projects():
     ]
     return jsonify(data)
 
+@app.route('/api/get_user_data', methods=['POST'])
+@cross_origin()
+def get_user_data():
+    data = request.get_json()
+    return jsonify(user_data(data))
+
 @app.route('/api/post_data', methods=['POST'])
 def post_data():
     data = request.get_json()

@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import "./Navbar.css";
 import ModalEditFirst from "./modals/ModalEditFirst";
 
-function Navbar() {
-  const [data, setData] = useState();
-  const [openmodal, setOpenmodal] = useState(false);
+function Navbar(props) {
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch('http://localhost:5000/api/get_name');
-      const data = await response.json();
-      setData(data);
-    }
-    fetchData();
-  }, []);
+  const [openmodal, setOpenmodal] = useState(false);
 
   return (
     <div>
         <nav>
             <div className='message'>
-                {data ? <p>{data.message}</p> : <p></p>}
+                {props.data[0][0] ? <p>Hello {props.data[0][0]}!</p> : <p></p>}
             </div>
             <div className='buttons'>
                 <button
@@ -30,7 +21,7 @@ function Navbar() {
                 >
                   User Panel
                 </button>
-                {openmodal && <ModalEditFirst closeModal={setOpenmodal} />}
+                {openmodal && <ModalEditFirst closeModal={setOpenmodal} data={props.data}/>}
                 <button>Logout</button>
             </div>
         </nav>

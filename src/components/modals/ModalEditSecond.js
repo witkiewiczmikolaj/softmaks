@@ -1,15 +1,7 @@
-import React, { useState, useEffect }  from "react";
+import React from "react";
 import "./ModalEdit.css";
 
 function ModalEditSecond(props) {
-    const [uname, setUname] = useState('');
-    const [usurname, setUsurname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [age, setAge] = useState(0);
-    const [sex, setSex] = useState('');
-    const [number, setNumber] = useState(0);
-    const [openmodal, setOpenmodal] = useState(false);
 
     
 /*
@@ -40,7 +32,6 @@ function ModalEditSecond(props) {
                         <input
                             type="text"
                             placeholder={props.usurname}
-                            value={usurname}
                             disabled
                         /><br></br>
                         <input

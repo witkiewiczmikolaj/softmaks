@@ -2,10 +2,10 @@ import React from 'react'
 import ProjectTable from "./ProjectTable"
 import Navbar from "./Navbar"
 
-function Home() {
+function Home(props) {
   return (
     <div>
-      <Navbar />
+      <Navbar data={props.data}/>
       <ProjectTable />
     </div>
   );

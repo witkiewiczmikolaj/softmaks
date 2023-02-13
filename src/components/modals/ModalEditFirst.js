@@ -1,8 +1,8 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState }  from "react";
 import "./ModalEdit.css";
 import ModalEditSecond from "./ModalEditSecond";
 
-function ModalEditFirst({ closeModal }) {
+function ModalEditFirst( props ) {
     const [uname, setUname] = useState('');
     const [usurname, setUsurname] = useState('');
     const [email, setEmail] = useState('');
@@ -62,25 +62,25 @@ function ModalEditFirst({ closeModal }) {
                         <form>
                             <input
                                 type="text"
-                                placeholder="Imię"
+                                placeholder={props.data[0][0]}
                                 value={uname}
                                 onChange={handleUnameChange}
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder="Nazwisko"
+                                placeholder={props.data[0][1]}
                                 value={usurname}
                                 onChange={handleUsurnameChange}
                             /><br></br>
                             <input
                                 type="password"
-                                placeholder="Hasło"
+                                placeholder={props.data[0][2]}
                                 value={password}
                                 onChange={handlePasswordChange}
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder="Wiek"
+                                placeholder={props.data[0][3]}
                                 value={age}
                                 onChange={handleAgeChange}
                                 min={1}
@@ -88,26 +88,26 @@ function ModalEditFirst({ closeModal }) {
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder="Płeć"
+                                placeholder={props.data[0][4]}
                                 value={sex}
                                 onChange={handleSexChange}
                             /><br></br>
                             <input
                                 type="email"
-                                placeholder="Email"
+                                placeholder={props.data[0][5]}
                                 value={email}
                                 onChange={handleEmailChange}
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder="Numer Telefonu"
+                                placeholder={props.data[0][6]}
                                 value={number}
                                 onChange={handleNumberChange}
                                 min={100000000}
                                 max={999999999}
                             /><br></br>
                             <div className="footer">
-                                <button id="cancel_button" onClick={() => closeModal(false)}>Anuluj</button>
+                                <button id="cancel_button" onClick={() => props.closeModal(false)}>Anuluj</button>
                                 <button 
                                 className="open_modal_button"
                                 onClick={() => {
@@ -121,7 +121,7 @@ function ModalEditFirst({ closeModal }) {
             </div>
             {openmodal && <ModalEditSecond 
             closeModal1={setOpenmodal} 
-            closeModal2={closeModal}
+            closeModal2={props.closeModal}
             uname={uname}
             usurname={usurname}
             email={email}

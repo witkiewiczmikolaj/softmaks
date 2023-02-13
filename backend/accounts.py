@@ -37,3 +37,13 @@ def log_in(data):
             return 'The password you entered was incorrect'
         else:
             return True
+
+def user_data(data):
+    email = data["email"]
+    if psql_connect() == 'error':
+        return 'error'
+    else:
+        cur = psql_connect()
+        cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
+        data = cur.fetchall()
+        return data
