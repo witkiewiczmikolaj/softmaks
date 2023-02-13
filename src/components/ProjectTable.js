@@ -1,12 +1,10 @@
 import React, { useState, useEffect }  from "react";
 import "./ProjectTable.css";
-import "./modals/ModalEditFirst";
-import ModalEditFirst from "./modals/ModalEditFirst";
 
 const ProjectTable = () => {
 
     const [projects, setProjects] = useState();
-    const [openmodal, setOpenmodal] = useState(false);
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -37,15 +35,8 @@ const ProjectTable = () => {
                         <td>{project.end}</td>
                         <td>{project.status}</td>
                         <td>
-                        <button
-                            className="open_modal_button"
-                            onClick={() => {
-                                setOpenmodal(true);
-                            }}
-                        >
-                        Edycja
-                        </button>
-                        {openmodal && <ModalEditFirst closeModal={setOpenmodal} />}
+                        <button>Edycja</button>
+                        
                         <button>Dodaj komentarz</button>
                         <button>Szczegóły projektu</button>
                         <button>Usuń</button>

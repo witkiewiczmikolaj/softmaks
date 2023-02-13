@@ -28,7 +28,7 @@ function ModalEditSecond(props) {
         <div className="modal_bg">  
             <div className="modal_container">
                 <div className="title">
-                    <h1>Zaktualizuj dane:</h1>
+                    <h1>Sprawdź poprawność danych:</h1>
                 </div>
                 <div className="body">
                     <form>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import "./Navbar.css";
+import ModalEditFirst from "./modals/ModalEditFirst";
 
 function Navbar() {
   const [data, setData] = useState();
+  const [openmodal, setOpenmodal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,7 +22,15 @@ function Navbar() {
                 {data ? <p>{data.message}</p> : <p></p>}
             </div>
             <div className='buttons'>
-                <button>User Panel</button>
+                <button
+                  className="open_modal_button"
+                  onClick={() => {
+                      setOpenmodal(true);
+                  }}
+                >
+                  User Panel
+                </button>
+                {openmodal && <ModalEditFirst closeModal={setOpenmodal} />}
                 <button>Logout</button>
             </div>
         </nav>
