@@ -8,9 +8,44 @@ nav {
 .message {
     display: flex;
     align-items: center;
+    font-size: 2rem;
+    font-weight: 550;
 }
 
 .buttons {
     display: flex;
     align-items: center;
 }
+
+.userpanel_button:hover, .logout_button:hover {
+    transform: scale(1.1);
+	transition-duration: 0.1s;
+}
+
+.userpanel_button:hover {
+    background-color: rgb(175, 175, 175);
+}
+
+.logout_button:hover {
+    background-color: rgb(210, 0, 0);
+}
+
+.userpanel_button, .logout_button {
+    width: 7rem;
+    height: 3rem;
+    margin: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 550;
+    cursor: pointer;
+    border-radius: 2rem;
+}
+
+.userpanel_button {
+    background-color: rgb(220, 220, 220);
+}
+
+.logout_button {
+    background-color: rgb(255, 0, 0);
+}
+

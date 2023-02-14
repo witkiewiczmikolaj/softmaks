@@ -14,7 +14,7 @@ function Navbar(props) {
             </div>
             <div className='buttons'>
                 <button
-                  className="open_modal_button"
+                  className="userpanel_button"
                   onClick={() => {
                       setOpenmodal(true);
                   }}
@@ -22,7 +22,7 @@ function Navbar(props) {
                   User Panel
                 </button>
                 {openmodal && <ModalEditFirst closeModal={setOpenmodal} data={props.data}/>}
-                <button>Logout</button>
+                <button className='logout_button' onClick={() => {props.closehome(false)}}>Logout</button>
             </div>
         </nav>
     </div>

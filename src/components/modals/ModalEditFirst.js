@@ -109,7 +109,7 @@ function ModalEditFirst( props ) {
                             <div className="footer">
                                 <button id="cancel_button" onClick={() => props.closeModal(false)}>Anuluj</button>
                                 <button 
-                                className="open_modal_button"
+                                id="submit_button"
                                 onClick={() => {
                                     setOpenmodal(true);
                                 }} 

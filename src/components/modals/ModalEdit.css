@@ -48,22 +48,42 @@
     padding-top: 4rem;
 }
 
-.modal_container .footer button {
-    width: 150px;
-    height: 45px;
+.footer button {
+    width: 7rem;
+    height: 3rem;
     margin: 10px;
     border: none;
-    background-color: rgb(60, 232, 48);
     color: white;
-    border-radius: 8px;
-    font-size: 20px;
+    border-radius: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
 #cancel_button {
-    background-color: crimson;
+    background-color: rgb(255, 0, 0);
+}
+
+#cancel_button:hover {
+    background-color: rgb(210, 0, 0);
 }
 
 #back_button {
-    background-color: rgb(65, 125, 228);
+    background-color: rgb(0, 0, 255);
+}
+
+#back_button:hover {
+    background-color: rgb(0, 0, 210);
+}
+
+#submit_button {
+    background-color: rgb(0, 255, 0);
+}
+
+#submit_button:hover {
+    background-color: rgb(0, 210, 0);
+}
+
+button:hover {
+    transform: scale(1.1);
+	transition-duration: 0.1s;
 }

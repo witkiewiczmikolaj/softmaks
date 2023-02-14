@@ -17,14 +17,13 @@ function Home(props) {
         });
         const data_response = await response_data.json();
         setData(data_response);
-        
     }
     fetchData();
-  }, []);
+  });
 
   return (
     <div className='home_bg'>
-      <Navbar data={data}/>
+      <Navbar data={data} closehome={props.closehome}/>
       <ProjectTable />
     </div>
   );

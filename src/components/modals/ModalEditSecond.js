@@ -64,7 +64,7 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
                         <div className="footer">
                             <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                             <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>
-                            <button type="submit" onClick={handleSubmit}>Dalej</button>
+                            <button id="submit_button" type="submit" onClick={handleSubmit}>Dalej</button>
                         </div> 
                     </form>
                 </div>

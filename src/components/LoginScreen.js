@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Home from './Home';
 import "./LoginScreen.css";
 
-function LoginScreen(props) {
+function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState(null);
     const [openhome, setOpenhome] = useState(false);
     
-
     const handleEmailChange = (e) => {
             setEmail(e.target.value);
     };
@@ -17,10 +15,6 @@ function LoginScreen(props) {
     const handlePasswordChange = (e) => {
             setPassword(e.target.value);
     };
-
-    /*function set_data(input){
-        props.data(input)
-    }*/
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,17 +26,9 @@ function LoginScreen(props) {
         });
         const login = await response_login.json();
         
-        /*const response_data = await fetch('http://localhost:5000/api/get_user_data', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({email: email}),
-        });
-        const data = await response_data.json();*/
-        
         if (login === true) {
             setOpenhome(true);
-            //props.closelogin(false);  
-            //set_data(data);
+            setPassword('');
         } else {
             setResponse(login);
         }} catch (error) {
@@ -52,7 +38,7 @@ function LoginScreen(props) {
 
     return (
         <div>
-            {openhome && <Home email={email}/>}
+            {openhome && <Home email={email} closehome={setOpenhome}/>}
             <form className='loginscreen_form' onSubmit={handleSubmit}>
                 <input
                     type="email"

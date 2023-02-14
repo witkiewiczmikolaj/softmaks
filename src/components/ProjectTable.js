@@ -16,7 +16,7 @@ const ProjectTable = () => {
       }, []);
 
     return (
-        <div>
+        <div className="table_container">
             <table>
                 <thead>
                     <tr>
@@ -36,7 +36,6 @@ const ProjectTable = () => {
                         <td>{project.status}</td>
                         <td>
                         <button>Edycja</button>
-                        
                         <button>Dodaj komentarz</button>
                         <button>Szczegóły projektu</button>
                         <button>Usuń</button>
