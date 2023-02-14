@@ -19,10 +19,10 @@ function Navbar(props) {
                       setOpenmodal(true);
                   }}
                 >
-                  User Panel
+                  Zmień dane
                 </button>
                 {openmodal && <ModalEditFirst closeModal={setOpenmodal} data={props.data}/>}
-                <button className='logout_button' onClick={() => {props.closehome(false)}}>Logout</button>
+                <button className='logout_button' onClick={() => {props.closehome(false)}}>Wyloguj</button>
             </div>
         </nav>
     </div>

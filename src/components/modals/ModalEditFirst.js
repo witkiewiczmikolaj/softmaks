@@ -7,9 +7,9 @@ function ModalEditFirst( props ) {
     const [usurname, setUsurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [age, setAge] = useState(0);
+    const [age, setAge] = useState('');
     const [sex, setSex] = useState('');
-    const [number, setNumber] = useState(0);
+    const [number, setNumber] = useState('');
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleEmailChange = (e) => {
@@ -39,18 +39,10 @@ function ModalEditFirst( props ) {
     const handleNumberChange = (e) => {
             setNumber(e.target.value);
     };
-/*
-    const [projects, setProjects] = useState();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        }; 
 
-    useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('http://localhost:5000/api/get_user');
-            const projects = await response.json();
-            setProjects(projects);
-        }
-        fetchData();
-      }, []);
-*/
     return (
         <div>
             <div className="modal_bg">  
@@ -59,48 +51,54 @@ function ModalEditFirst( props ) {
                         <h1>Zaktualizuj dane:</h1>
                     </div>
                     <div className="body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={props.data[0][0]}
+                                placeholder={"Imię: " + props.data[0][0]}
                                 value={uname}
                                 onChange={handleUnameChange}
+                                required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={props.data[0][1]}
+                                placeholder={"Nazwisko: " + props.data[0][1]}
                                 value={usurname}
                                 onChange={handleUsurnameChange}
+                                required
                             /><br></br>
                             <input
-                                type="password"
-                                placeholder={props.data[0][2]}
+                                type="text"
+                                placeholder={"Hasło: " + props.data[0][2]}
                                 value={password}
                                 onChange={handlePasswordChange}
+                                required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={props.data[0][3]}
+                                placeholder={"Wiek: " + props.data[0][3]}
                                 value={age}
                                 onChange={handleAgeChange}
+                                required
                                 min={1}
                                 max={200}
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={props.data[0][4]}
+                                placeholder={"Płeć: " + props.data[0][4]}
                                 value={sex}
                                 onChange={handleSexChange}
+                                required
                             /><br></br>
                             <input
-                                type="email"
-                                placeholder={props.data[0][5]}
+                                type="text"
+                                placeholder={"Email: " + props.data[0][5]}
                                 value={email}
                                 onChange={handleEmailChange}
+                                required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={props.data[0][6]}
+                                placeholder={"Numer telefonu: " + props.data[0][6]}
                                 value={number}
                                 onChange={handleNumberChange}
                                 min={100000000}

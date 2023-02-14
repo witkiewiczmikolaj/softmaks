@@ -1,4 +1,4 @@
-
+import React from 'react'
 import './App.css'
 
 import LoginScreen from "./components/LoginScreen"
@@ -9,7 +9,6 @@ function App() {
     <div>
       <LoginScreen />
     </div>
-  
   )
 }
  

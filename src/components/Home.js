@@ -9,7 +9,6 @@ function Home(props) {
 
   useEffect(() => {
     async function fetchData() {
-        
         const response_data = await fetch('http://localhost:5000/api/get_user_data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -19,7 +18,7 @@ function Home(props) {
         setData(data_response);
     }
     fetchData();
-  });
+  }, []); //DODAĆ ODŚWIEŻANIE DANYCH PRZY ZMIANIE DANYCH UŻYTKOWANIKA
 
   return (
     <div className='home_bg'>

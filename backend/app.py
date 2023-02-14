@@ -6,12 +6,6 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/api/get_name', methods=['GET'])
-@cross_origin()
-def get_name():
-    data = {'message': 'Hello User1'}
-    return jsonify(data)
-
 @app.route('/api/get_projects', methods=['GET'])
 @cross_origin()
 def get_projects():
