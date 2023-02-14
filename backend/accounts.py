@@ -1,5 +1,11 @@
 from psql import *
 
+def get_name(email):
+    cur, c = psql_connect()
+    cur.execute(f"SELECT name FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
+    name = cur.fetchone()
+    return name[0]
+
 def email_check(email):
     if psql_connect() == 'error':
         return 'error'
@@ -60,3 +66,12 @@ def update_user(data):
         except psycopg2.errors.CheckViolation:
             return 'violation'
         return True
+
+def get_user_email(name):
+    if psql_connect() == 'error':
+        return 'error'
+    else:
+        cur, c = psql_connect()
+        cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE name = '{name}'")
+        email = cur.fetchone()
+        return email[0]

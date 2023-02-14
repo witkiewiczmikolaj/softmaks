@@ -1,0 +1,8 @@
+.home_bg {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    bottom: 0;
+    right: 0;   
+}
