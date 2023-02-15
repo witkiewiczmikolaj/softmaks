@@ -23,7 +23,7 @@ function Home(props) {
   return (
     <div className='home_bg'>
       <Navbar data={data} closehome={props.closehome}/>
-      <ProjectTable />
+      <ProjectTable data={data}/>
     </div>
   );
 }

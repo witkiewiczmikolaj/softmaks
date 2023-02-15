@@ -3,12 +3,12 @@ import "./ModalEdit.css";
 
 function ModalEditSecond(props) {
 
-const data_props = [props.uname, props.usurname, props.password, props.age, props.sex, props.email, props.number, props.oldemail];
+const data_props = [props.name, props.description, props.startdate, props.enddate, props.users, props.email];
 
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
         
-        const response = await fetch('http://localhost:5000/api/update_user_data', {
+        const response = await fetch('http://localhost:5000/api/create_project', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({data: data_props}),
@@ -22,12 +22,11 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
 
                 let element = document.getElementById("submit_button_second");
             
-                if (props.uname === '' || 
-                props.usurname === '' || 
-                props.password === '' || 
-                props.age === '' || 
-                props.sex === '' || 
-                props.email === '') {
+                if (props.name === '' || 
+                props.description === '' || 
+                props.startdate === '' || 
+                props.enddate === '' || 
+                props.users === '') {
                    element.setAttribute("hidden", "hidden");
                 } else {
                     element.removeAttribute("hidden");
@@ -46,39 +45,30 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
                     <form onSubmit={handleSubmitUpdate}>
                         <input
                             type="text"
-                            placeholder={props.uname}
+                            placeholder={props.name}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.usurname}
+                            placeholder={props.description}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.password}
+                            placeholder={props.startdate}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.age}
+                            placeholder={props.enddate}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.sex}
+                            placeholder={props.users}
                             disabled
                         /><br></br>
-                        <input
-                            type="text"
-                            placeholder={props.email}
-                            disabled
-                        /><br></br>
-                        <input
-                            type="text"
-                            placeholder={props.number}
-                            disabled
-                        /><br></br>
+                        <br></br>
                         <div className="footer">
                             <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                             <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>

@@ -39,6 +39,7 @@ function ModalEditFirst( props ) {
     const handleNumberChange = (e) => {
             setNumber(e.target.value);
     };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         }; 
@@ -83,12 +84,17 @@ function ModalEditFirst( props ) {
                                 max={200}
                             /><br></br>
                             <input
-                                type="text"
+                                list="sexlist"
                                 placeholder={"Płeć: " + props.data[0][4]}
                                 value={sex}
                                 onChange={handleSexChange}
                                 required
-                            /><br></br>
+                            />
+                            <datalist id="sexlist">
+                                <option value="Mężczyzna"/>
+                                <option value="Kobieta"/>
+                            </datalist>
+                            <br></br>
                             <input
                                 type="text"
                                 placeholder={"Email: " + props.data[0][5]}
@@ -127,6 +133,7 @@ function ModalEditFirst( props ) {
             sex={sex}
             age={age}
             number={number}
+            oldemail={props.data[0][5]}
             />}
         </div>
         

@@ -1,9 +1,11 @@
 import React, { useState, useEffect }  from "react";
 import "./ProjectTable.css";
+import ModalCreateFirst from "./modals/ModalCreateFirst"
 
-const ProjectTable = () => {
+const ProjectTable = (props) => {
 
     const [projects, setProjects] = useState();
+    const [opencreate, setOpencreate] = useState(false);
     
 
     useEffect(() => {
@@ -17,6 +19,7 @@ const ProjectTable = () => {
 
     return (
         <div className="table_container">
+            <button className="create_button" onClick={() => {setOpencreate(true);}}>Stwórz nowy projekt</button>
             <table>
                 <thead>
                     <tr>
@@ -44,6 +47,7 @@ const ProjectTable = () => {
                     )) : <tr><td></td></tr>}
                 </tbody>
             </table>
+            {opencreate && <ModalCreateFirst closemodal={setOpencreate} data={props.data} />}
         </div>
     );
 };

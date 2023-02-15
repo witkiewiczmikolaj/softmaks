@@ -59,10 +59,16 @@ def update_user(data):
     except Exception as e:
         return f"{e}"
     if data[6] == '':
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}' WHERE email = '{data[5]}';")
-        c.commit()
+        try:
+            cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}' WHERE email = '{data[7]}';")
+            c.commit()
+        except Exception as e:
+            return f"{e}"
     else:
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[5]}';")
-        c.commit()
+        try:
+            cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[7]}';")
+            c.commit()
+        except Exception as e:
+            return f"{e}"
     
     return True
