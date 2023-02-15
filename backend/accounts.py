@@ -72,3 +72,36 @@ def update_user(data):
             return f"{e}"
     
     return True
+
+def get_users_email():
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+    cur.execute("SELECT email FROM ACCOUNTS_SOFTMAKS")
+    data = cur.fetchall()
+    everyemail = []
+    for emails in data:
+        for email in emails:
+            everyemail.append(email)
+    return everyemail
+
+def create_new_project(data):
+    data = data["data"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+    try:
+        cur.execute(f"INSERT INTO PROJECTS_SOFTMAKS (name, description, start_date, end_date, status, created_by) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', 'NOWY', '{data[5]}');")
+        c.commit()
+        cur.execute(f"SELECT project_id FROM PROJECTS_SOFTMAKS")
+        project_id = cur.fetchall()
+        for email in data[4]:
+            cur.execute(f"INSERT INTO PROJECTS_USERS (project_id, user_email) VALUES ('{project_id[0][-1]}', '{email}');") 
+            c.commit()
+        
+    except Exception as e:
+        return f"{e}"
+    
+    return True

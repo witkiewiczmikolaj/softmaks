@@ -15,22 +15,29 @@ def get_projects():
     ]
     return jsonify(data)
 
+@app.route('/api/get_users', methods=['GET'])
+@cross_origin()
+def get_users():
+    data = get_users_email()
+    return jsonify(data)
+
 @app.route('/api/get_user_data', methods=['POST'])
 @cross_origin()
 def get_user_data():
     data = request.get_json()
     return jsonify(user_data(data))
 
+@app.route('/api/create_project', methods=['POST'])
+@cross_origin()
+def create_project():
+    data = request.get_json()
+    return jsonify(create_new_project(data))
+
 @app.route('/api/update_user_data', methods=['POST'])
 @cross_origin()
 def update_user_data():
     data = request.get_json()
     return jsonify(update_user(data))
-
-@app.route('/api/post_data', methods=['POST'])
-def post_data():
-    data = request.get_json()
-    return data
 
 @app.route('/login', methods=['POST'])
 def login():

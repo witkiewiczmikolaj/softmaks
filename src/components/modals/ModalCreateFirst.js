@@ -1,5 +1,5 @@
-import React, { useState }  from "react";
-//import Select from 'react-select'
+import React, { useState, useEffect }  from "react";
+import Select from 'react-select'
 import "./ModalEdit.css";
 import ModalCreateSecond from "./ModalCreateSecond";
 
@@ -8,7 +8,8 @@ function ModalEditFirst( props ) {
     const [description, setDescription] = useState('');
     const [startdate, setStartdate] = useState('');
     const [enddate, setEnddate] = useState('');
-    const [users, setUsers] = useState('');
+    const [users, setUsers] = useState([]);
+    const [usersfinal, setUsersfinal] = useState([]);
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleNameChange = (e) => {
@@ -28,13 +29,28 @@ function ModalEditFirst( props ) {
     };
     
     const handleUsersChange = (e) => {
-            setUsers(e.target.value);
+            let users_array = []
+            for(let i=0; i<e.length; i++) {
+                users_array.push(e[i]["value"])
+            }
+            setUsersfinal(users_array);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         }; 
 
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('http://localhost:5000/api/get_users');
+            const users_response = await response.json();
+            
+            const users_select = users_response ? users_response.map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };
+            setUsers(users_select);
+        }
+        fetchData();
+        }, []);
+        
     return (
         <div>
             <div className="modal_bg">  
@@ -58,28 +74,21 @@ function ModalEditFirst( props ) {
                                 onChange={handleDescriptionChange}
                                 required
                             /><br></br>
-                            <label for="start_date">Data rozpoczęcia:</label>
+                            <label>Data rozpoczęcia:</label>
                             <input
-                                name="start_date"
                                 type="date"
                                 value={startdate}
                                 onChange={handleStartdateChange}
                                 required
                             /><br></br>
-                            <label for="peas">Data zakończenia:</label>
+                            <label>Data zakończenia:</label>
                             <input
-                                name="end_date"
                                 type="date"
                                 value={enddate}
                                 onChange={handleEnddateChange}
                                 required
                             /><br></br>
-                            <select multiple> 
-                                <option value="value1">Option 1</option>
-                                <option value="value2">Option 2</option>
-                                <option value="value3">Option 3</option>
-                            </select>
-                            
+                             <Select className="select" isMulti onChange={handleUsersChange} options={users} />
                             <br></br>
                             <div className="footer">
                                 <button id="cancel_button" onClick={() => props.closemodal(false)}>Anuluj</button>
@@ -101,7 +110,7 @@ function ModalEditFirst( props ) {
             description={description}
             startdate={startdate}
             enddate={enddate}
-            users={users}
+            users={usersfinal}
             email={props.data[0][5]}
             />}
         </div>
