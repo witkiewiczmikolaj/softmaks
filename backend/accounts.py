@@ -85,6 +85,23 @@ def get_users_email():
         for email in emails:
             everyemail.append(email)
     return everyemail
+    
+def get_users_projects(email):
+    email = email["email"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+
+    cur.execute(f"SELECT project_id FROM PROJECT_USERS where user_email = '{email}'")
+    data = cur.fetchall()
+    projects_array =[]
+    for project_id in data:
+        cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id[0]}")
+        projects = cur.fetchall()
+        projects_array.append(projects)
+    
+    return projects_array
 
 def create_new_project(data):
     data = data["data"]
@@ -98,9 +115,10 @@ def create_new_project(data):
         cur.execute(f"SELECT project_id FROM PROJECTS_SOFTMAKS")
         project_id = cur.fetchall()
         for email in data[4]:
-            cur.execute(f"INSERT INTO PROJECTS_USERS (project_id, user_email) VALUES ('{project_id[0][-1]}', '{email}');") 
+            cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{email}');") 
             c.commit()
-        
+        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{data[5]}');") 
+        c.commit()
     except Exception as e:
         return f"{e}"
     

@@ -6,14 +6,11 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/api/get_projects', methods=['GET'])
+@app.route('/api/get_projects', methods=['POST'])
 @cross_origin()
 def get_projects():
-    data = [{'name': 'Projekt1', 'start' : '2022-01-01', 'end' : '2022-01-02', 'status' : 'nowy'},
-            {'name': 'Projekt2', 'start' : '2022-02-01', 'end' : '2022-02-02', 'status' : 'nowy'},
-            {'name': 'Projekt3', 'start' : '2022-03-01', 'end' : '2022-03-02', 'status' : 'nowy'}
-    ]
-    return jsonify(data)
+    data = request.get_json()
+    return jsonify(get_users_projects(data))
 
 @app.route('/api/get_users', methods=['GET'])
 @cross_origin()

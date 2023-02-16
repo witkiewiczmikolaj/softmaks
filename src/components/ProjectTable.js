@@ -4,18 +4,21 @@ import ModalCreateFirst from "./modals/ModalCreateFirst"
 
 const ProjectTable = (props) => {
 
-    const [projects, setProjects] = useState();
+    const [projects, setProjects] = useState([[]]);
     const [opencreate, setOpencreate] = useState(false);
     
-
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('http://localhost:5000/api/get_projects');
-            const projects = await response.json();
-            setProjects(projects);
+            const response_data = await fetch('http://localhost:5000/api/get_projects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({email: props.data[0][5]}),
+            });
+            const projects_response = await response_data.json();
+            setProjects(projects_response);
         }
         fetchData();
-      }, []);
+      }, [opencreate]);
 
     return (
         <div className="table_container">
@@ -31,12 +34,12 @@ const ProjectTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects ? projects.map((project, index) => (
+                {projects ? projects.map((project, index) => (
                     <tr key={index}>
-                        <td>{project.name}</td>
-                        <td>{project.start}</td>
-                        <td>{project.end}</td>
-                        <td>{project.status}</td>
+                        <td>{project[0][1]}</td>
+                        <td>{project[0][3]}</td>
+                        <td>{project[0][4]}</td>
+                        <td>{project[0][5]}</td>
                         <td>
                         <button>Edycja</button>
                         <button>Dodaj komentarz</button>
