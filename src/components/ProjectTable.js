@@ -1,18 +1,21 @@
 import React, { useState, useEffect }  from "react";
 import "./ProjectTable.css";
 import ModalCreateFirst from "./modals/ModalCreateFirst"
+import ModalDeleteFirst from "./modals/ModalDeleteFirst"
 
 const ProjectTable = (props) => {
 
-    const [projects, setProjects] = useState([[]]);
+    const [projects, setProjects] = useState([[[]]]);
     const [opencreate, setOpencreate] = useState(false);
+    const [opendelete, setOpendelete] = useState(false);
+    const [projectid, setProjectid] = useState('');
     
     useEffect(() => {
         async function fetchData() {
             const response_data = await fetch('http://localhost:5000/api/get_projects', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({email: props.data[0][5]}),
+                body: JSON.stringify({email: props.email}),
             });
             const projects_response = await response_data.json();
             setProjects(projects_response);
@@ -44,13 +47,14 @@ const ProjectTable = (props) => {
                         <button>Edycja</button>
                         <button>Dodaj komentarz</button>
                         <button>Szczegóły projektu</button>
-                        <button>Usuń</button>
+                        <button onClick={() => {setOpendelete(true); setProjectid(project[0][0])}}>Usuń</button>
                         </td>
                     </tr>
                     )) : <tr><td></td></tr>}
                 </tbody>
             </table>
             {opencreate && <ModalCreateFirst closemodal={setOpencreate} data={props.data} />}
+            {opendelete && <ModalDeleteFirst closemodal={setOpendelete} id={projectid} />}
         </div>
     );
 };

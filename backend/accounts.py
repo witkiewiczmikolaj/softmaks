@@ -47,7 +47,6 @@ def user_data(data):
     except Exception as e:
         return f"{e}"
 
-    cur, c = psql_connect()
     cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     data = cur.fetchall()
     return data
@@ -86,8 +85,8 @@ def get_users_email():
             everyemail.append(email)
     return everyemail
     
-def get_users_projects(email):
-    email = email["email"]
+def get_users_projects(data):
+    email = data["email"]
     try:
         cur, c = psql_connect()
     except Exception as e:
@@ -100,7 +99,7 @@ def get_users_projects(email):
         cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id[0]}")
         projects = cur.fetchall()
         projects_array.append(projects)
-    
+
     return projects_array
 
 def create_new_project(data):
@@ -122,4 +121,18 @@ def create_new_project(data):
     except Exception as e:
         return f"{e}"
     
+    return True
+
+def delete_project_fcn(data):
+    project_id = data["id"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+
+    cur.execute(f"DELETE FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
+    c.commit()
+    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {project_id}")
+    c.commit()
+
     return True
