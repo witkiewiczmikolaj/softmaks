@@ -36,7 +36,7 @@ const data_props = [props.name, props.description, props.startdate, props.enddat
           });
         
     return (
-        <div className="modal_bg">  
+        <div className="modal_bg_second">  
             <div className="modal_container">
                 <div className="title">
                     <h1>Sprawdź poprawność danych:</h1>

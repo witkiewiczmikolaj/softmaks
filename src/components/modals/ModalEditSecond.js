@@ -37,7 +37,7 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
           });
         
     return (
-        <div className="modal_bg">  
+        <div className="modal_bg_second">  
             <div className="modal_container">
                 <div className="title">
                     <h1>Sprawdź poprawność danych:</h1>

@@ -21,7 +21,7 @@ const ProjectTable = (props) => {
             setProjects(projects_response);
         }
         fetchData();
-      }, [opencreate]);
+      }, [opencreate, opendelete]);
 
     return (
         <div className="table_container">
@@ -53,7 +53,7 @@ const ProjectTable = (props) => {
                     )) : <tr><td></td></tr>}
                 </tbody>
             </table>
-            {opencreate && <ModalCreateFirst closemodal={setOpencreate} data={props.data} />}
+            {opencreate && <ModalCreateFirst closemodal={setOpencreate} email={props.email} />}
             {opendelete && <ModalDeleteFirst closemodal={setOpendelete} id={projectid} />}
         </div>
     );

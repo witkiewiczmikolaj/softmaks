@@ -16,7 +16,7 @@ function ModalDeleteSecond(props) {
         };
 
     return (
-        <div className="modal_bg">  
+        <div className="modal_bg_second">  
             <div className="modal_container">
                 <div className="title">
                     <h1>UWAGA! Wszystkie dane zostaną usunięte. Czy na pewno chcesz kontynuować?</h1>

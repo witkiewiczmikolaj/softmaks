@@ -46,7 +46,7 @@ function ModalEditFirst( props ) {
 
     return (
         <div>
-            <div className="modal_bg">  
+            <div className="modal_bg_first">  
                 <div className="modal_container">
                     <div className="title">
                         <h1>Zaktualizuj dane:</h1>
@@ -55,28 +55,28 @@ function ModalEditFirst( props ) {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={"Imię: " + props.data[0][0]}
+                                placeholder={"Imię: " + props.data?.[0]?.[0]}
                                 value={uname}
                                 onChange={handleUnameChange}
                                 required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Nazwisko: " + props.data[0][1]}
+                                placeholder={"Nazwisko: " + props.data?.[0]?.[1]}
                                 value={usurname}
                                 onChange={handleUsurnameChange}
                                 required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Hasło: " + props.data[0][2]}
+                                placeholder={"Hasło: " + props.data?.[0]?.[2]}
                                 value={password}
                                 onChange={handlePasswordChange}
                                 required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={"Wiek: " + props.data[0][3]}
+                                placeholder={"Wiek: " + props.data?.[0]?.[3]}
                                 value={age}
                                 onChange={handleAgeChange}
                                 required
@@ -85,7 +85,7 @@ function ModalEditFirst( props ) {
                             /><br></br>
                             <input
                                 list="sexlist"
-                                placeholder={"Płeć: " + props.data[0][4]}
+                                placeholder={"Płeć: " + props.data?.[0]?.[4]}
                                 value={sex}
                                 onChange={handleSexChange}
                                 required
@@ -97,14 +97,14 @@ function ModalEditFirst( props ) {
                             <br></br>
                             <input
                                 type="text"
-                                placeholder={"Email: " + props.data[0][5]}
+                                placeholder={"Email: " + props.data?.[0]?.[5]}
                                 value={email}
                                 onChange={handleEmailChange}
                                 required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={"Numer telefonu: " + props.data[0][6]}
+                                placeholder={"Numer telefonu: " + props.data?.[0]?.[6]}
                                 value={number}
                                 onChange={handleNumberChange}
                                 min={100000000}
@@ -133,7 +133,7 @@ function ModalEditFirst( props ) {
             sex={sex}
             age={age}
             number={number}
-            oldemail={props.data[0][5]}
+            oldemail={props.data?.[0]?.[5]}
             />}
         </div>
         

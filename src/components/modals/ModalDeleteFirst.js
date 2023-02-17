@@ -7,7 +7,7 @@ function ModalDeleteFirst( props ) {
         
     return (
         <div>
-            <div className="modal_bg">  
+            <div className="modal_bg_first">  
                 <div className="modal_container">
                     <div className="title">
                         <h1>Usunąć projekt?</h1>

@@ -53,7 +53,7 @@ function ModalEditFirst( props ) {
         
     return (
         <div>
-            <div className="modal_bg">  
+            <div className="modal_bg_first">  
                 <div className="modal_container">
                     <div className="title">
                         <h1>Podaj dane projektu:</h1>
@@ -111,7 +111,7 @@ function ModalEditFirst( props ) {
             startdate={startdate}
             enddate={enddate}
             users={usersfinal}
-            email={props.data[0][5]}
+            email={props.email}
             />}
         </div>
         
