@@ -136,3 +136,39 @@ def delete_project_fcn(data):
     c.commit()
 
     return True
+
+def get_project_data_fcn(data):
+    project_id = data["id"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+
+    cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
+    data_response = cur.fetchall()
+
+    return data_response
+
+def update_project_data_fcn(data):
+    data = data["data"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+    
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = '{data[0]}', description = '{data[1]}', start_date = '{data[2]}', end_date = '{data[3]}', status = '{data[4]}' WHERE project_id = {data[5]};")
+    c.commit()
+   
+    return True
+
+def add_comment_fcn(data):
+    data = data["data"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+    
+    cur.execute(f"INSERT INTO COMMENTS (text, date, user_email, project_id) VALUES ('{data[0]}', '{data[3]}', '{data[2]}', {data[1]});")
+    c.commit()
+   
+    return True

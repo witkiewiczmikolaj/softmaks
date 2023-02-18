@@ -23,7 +23,7 @@
 
 .modal_container {
     width: 500px;
-    height: 600px;
+    height: 500px;
     border-radius: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -36,24 +36,19 @@
     text-align: center;
 }
 
-.modal_container .body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.7rem;
-    text-align: center;
-}
-
-.select__value-container{
-    height: 100px;
-    width: 300px;
-}
-
-.modal_container input {
+form {
     width: 100%;
-    font-size: 1.7rem;
+    height: 100%;
+    font-size: 1.2rem;
     margin-top: 1rem;
-    text-align: center;
+}
+
+.modal_container textarea {
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
 }
 
 .modal_container .footer {

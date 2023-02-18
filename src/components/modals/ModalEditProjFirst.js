@@ -1,15 +1,14 @@
 import React, { useState, useEffect }  from "react";
-import Select from 'react-select'
-import "./ModalCreate.css";
-import ModalCreateSecond from "./ModalCreateSecond";
+import "./ModalEdit.css";
+import ModalEditProjSecond from "./ModalEditProjSecond";
 
-function ModalEditFirst( props ) {
+function ModalEditProjFirst( props ) {
+    const [projectdata, setProjectdata] = useState([[]]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [startdate, setStartdate] = useState('');
-    const [enddate, setEnddate] = useState('');
-    const [users, setUsers] = useState([]);
-    const [usersfinal, setUsersfinal] = useState([]);
+    const [start, setStart] = useState('');
+    const [end, setEnd] = useState('');
+    const [status, setStatus] = useState('');
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleNameChange = (e) => {
@@ -20,79 +19,84 @@ function ModalEditFirst( props ) {
             setDescription(e.target.value);
     };
 
-    const handleStartdateChange = (e) => {
-            setStartdate(e.target.value);
+    const handleStartChange = (e) => {
+            setStart(e.target.value);
     };
 
-    const handleEnddateChange = (e) => {
-            setEnddate(e.target.value);
+    const handleEndChange = (e) => {
+            setEnd(e.target.value);
     };
     
-    const handleUsersChange = (e) => {
-            let users_array = []
-            for(let i=0; i<e.length; i++) {
-                users_array.push(e[i]["value"])
-            }
-            setUsersfinal(users_array);
+    const handleStatusChange = (e) => {
+            setStatus(e.target.value);
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         }; 
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('http://localhost:5000/api/get_users');
-            const users_response = await response.json();
-            
-            const users_select = users_response ? users_response.map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };
-            setUsers(users_select);
+            const response_data = await fetch('http://localhost:5000/api/get_project_data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({id: props.id}),
+            });
+            const project_data_response = await response_data.json();
+            setProjectdata(project_data_response);
         }
         fetchData();
-        }, []);
-        
+        }, [props.closemodal]);
+
     return (
         <div>
             <div className="modal_bg_first">  
                 <div className="modal_container">
                     <div className="title">
-                        <h1>Podaj dane projektu:</h1>
+                        <h1>Zaktualizuj dane:</h1>
                     </div>
                     <div className="body">
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={"Nazwa" }
+                                placeholder={"Nazwa: " + projectdata?.[0]?.[1]}
                                 value={name}
                                 onChange={handleNameChange}
                                 required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Opis"}
+                                placeholder={"Opis: " + projectdata?.[0]?.[2]}
                                 value={description}
                                 onChange={handleDescriptionChange}
                                 required
                             /><br></br>
-                            <label>Data rozpoczęcia:</label>
+                            <label>Stara data rozpoczęcia: {projectdata?.[0]?.[3]}</label>
                             <input
                                 type="date"
-                                value={startdate}
-                                onChange={handleStartdateChange}
+                                value={start}
+                                onChange={handleStartChange}
                                 required
                             /><br></br>
-                            <label>Data zakończenia:</label>
+                            <label>Stara data zakończenia: {projectdata?.[0]?.[4]}</label>
                             <input
                                 type="date"
-                                value={enddate}
-                                onChange={handleEnddateChange}
+                                value={end}
+                                onChange={handleEndChange}
                                 required
                             /><br></br>
-                            <label>Dodaj użykowników:</label>
-                            <div className="select_div">
-                                <Select isMulti onChange={handleUsersChange} options={users} classNamePrefix="select"/>
-                            </div>
-                            <br></br>
+                            <input
+                                list="statuslist"
+                                placeholder={"Status: " + projectdata?.[0]?.[5]}
+                                value={status}
+                                onChange={handleStatusChange}
+                                required
+                            /><br></br>
+                            <datalist id="statuslist">
+                                <option value="NOWY"/>
+                                <option value="W TRAKCIE"/>
+                                <option value="ZAKOŃCZONY"/>
+                            </datalist>
                             <div className="footer">
                                 <button id="cancel_button" onClick={() => props.closemodal(false)}>Anuluj</button>
                                 <button 
@@ -106,19 +110,18 @@ function ModalEditFirst( props ) {
                     </div>
                 </div>
             </div>
-            {openmodal && <ModalCreateSecond 
+            {openmodal && <ModalEditProjSecond 
             closeModal1={setOpenmodal} 
             closeModal2={props.closemodal}
             name={name}
             description={description}
-            startdate={startdate}
-            enddate={enddate}
-            users={usersfinal}
-            email={props.email}
+            start={start}
+            end={end}
+            status={status}
+            id={props.id}
             />}
         </div>
-        
     );
 };
 
-export default ModalEditFirst;
+export default ModalEditProjFirst;

@@ -30,6 +30,24 @@ def get_user_data():
     data = request.get_json()
     return jsonify(user_data(data))
 
+@app.route('/api/get_project_data', methods=['POST'])
+@cross_origin()
+def get_project_data():
+    data = request.get_json()
+    return jsonify(get_project_data_fcn(data))
+
+@app.route('/api/update_project_data', methods=['POST'])
+@cross_origin()
+def update_project_data():
+    data = request.get_json()
+    return jsonify(update_project_data_fcn(data))
+
+@app.route('/api/add_comment', methods=['POST'])
+@cross_origin()
+def add_comment():
+    data = request.get_json()
+    return jsonify(add_comment_fcn(data))
+
 @app.route('/api/create_project', methods=['POST'])
 @cross_origin()
 def create_project():

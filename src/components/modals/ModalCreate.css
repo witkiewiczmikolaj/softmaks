@@ -49,6 +49,10 @@
     width: 300px;
 }
 
+.select_div {
+    font-size: 1rem;
+}
+
 .modal_container input {
     width: 100%;
     font-size: 1.7rem;
@@ -61,7 +65,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 4rem;
+    padding-top: 0.1rem;
 }
 
 .footer button {
