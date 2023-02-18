@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "./ModalEdit.css";
 
 function ModalEditSecond(props) {
 

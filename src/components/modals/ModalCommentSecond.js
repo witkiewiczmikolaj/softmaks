@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./ModalComment.css";
+import "./ModalEdit.css";
 
 function ModalCommentSecond(props) {
 

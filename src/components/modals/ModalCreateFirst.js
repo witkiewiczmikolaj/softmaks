@@ -1,6 +1,5 @@
 import React, { useState, useEffect }  from "react";
 import Select from 'react-select'
-import "./ModalCreate.css";
 import ModalCreateSecond from "./ModalCreateSecond";
 
 function ModalEditFirst( props ) {
