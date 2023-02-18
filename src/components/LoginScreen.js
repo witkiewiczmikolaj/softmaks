@@ -40,6 +40,7 @@ function LoginScreen() {
         <div>
             {openhome && <Home email={email} closehome={setOpenhome}/>}
             <form className='loginscreen_form' onSubmit={handleSubmit}>
+                <h1>Zaloguj się:</h1>
                 <input
                     type="email"
                     placeholder="Email"
@@ -52,10 +53,14 @@ function LoginScreen() {
                     value={password}
                     onChange={handlePasswordChange}
                 />
-                <button type="submit">Login</button>
+                <button type="submit">Zatwierdź</button>
                 {response ? <p>{response}</p> : <p></p>}
             </form>
-            
+            <div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
         </div>
         
   );
