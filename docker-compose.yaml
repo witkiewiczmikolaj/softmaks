@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    - 5000:5000
+    environment:
+      - POSTGRES_USER=mikolaj
+      - POSTGRES_PASSWORD=mikolaj123
+      - POSTGRES_IP=23.88.122.80
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=helbreder
+    networks:
+      - softmaksnet
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    - 3000:3000
+    networks:
+      - softmaksnet
+  
+networks:
+  softmaksnet:
+    name: softmaksnet
