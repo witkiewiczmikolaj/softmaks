@@ -67,6 +67,7 @@ def update_user_data():
     return jsonify(update_user(data))
 
 @app.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     data = request.get_json()
     return jsonify(log_in(data))
