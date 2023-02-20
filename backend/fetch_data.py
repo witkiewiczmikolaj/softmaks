@@ -172,3 +172,25 @@ def add_comment_fcn(data):
     c.commit()
    
     return True
+
+def get_project_details_fcn(data):
+    project_id = data["id"]
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+
+    cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id}")
+    details = cur.fetchone()
+    cur.execute(f"SELECT name, surname FROM ACCOUNTS_SOFTMAKS where email = '{details[6]}'")
+    name = cur.fetchone()
+    cur.execute(f"SELECT * FROM PROJECT_USERS where project_id = {project_id}")
+    users_sql = cur.fetchall()
+    cur.execute(f"SELECT * FROM COMMENTS where project_id = {project_id}")
+    comments = cur.fetchall()
+    users = []
+    for user in users_sql:
+        users.append(user[1])
+    data = [details, users, comments, name]
+
+    return data

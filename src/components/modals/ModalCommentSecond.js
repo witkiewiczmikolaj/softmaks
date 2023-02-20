@@ -16,7 +16,8 @@ const handleSubmitUpdate = async (e) => {
     });
     const data = await response.json();
     console.log(data)
-    props.closeModal2(false)
+    props.closeModal2(false);
+    props.opendetail(true);
     };
 
 useEffect(() => {
@@ -46,7 +47,7 @@ useEffect(() => {
         <div className="modal_bg_second">  
             <div className="modal_container">
                 <div className="title">
-                    <h1>Czy chcesz dodać ten komentarz?:</h1>
+                    <h1>Czy chcesz dodać ten komentarz?</h1>
                 </div>
                 <div className="body">
                     <form onSubmit={handleSubmitUpdate}>

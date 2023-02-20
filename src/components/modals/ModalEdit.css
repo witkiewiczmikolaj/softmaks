@@ -32,8 +32,53 @@
     padding: 25px;
 }
 
+.modal_container_det {
+    width: 75%;
+    height: 75%;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.modal_container_det p {
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
 .modal_container .title {
     text-align: center;
+}
+
+.modal_container_det .title {
+    text-align: center;
+}
+
+.modal_container_det textarea:read-only {
+    background-color: white;
+    text-align: center;
+    height: 20%;
+    width: 80%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    resize: none;
+    border: none;
+}
+
+.modal_container_det h2 {
+    text-align: center;
+}
+
+.modal_container_det ul {
+    max-height: 150px;
+    overflow: auto;
+}
+
+.modal_container_det .users {
+    margin-left: 100px;
+    max-width: 80%;
+    overflow: auto;
 }
 
 .modal_container .body {
@@ -64,6 +109,14 @@
     padding-top: 8rem;
 }
 
+.modal_container_det .footer {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}
+
 .footer button {
     width: 7rem;
     height: 3rem;
@@ -84,7 +137,7 @@ form {
 
 .modal_container textarea {
     width: 100%;
-    height: 100%;
+    height: 30%;
     font-size: 1.2rem;
     margin-top: 1rem;
     box-sizing: border-box;

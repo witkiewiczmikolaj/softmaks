@@ -4,6 +4,7 @@ import ModalCreateFirst from "./modals/ModalCreateFirst"
 import ModalDeleteFirst from "./modals/ModalDeleteFirst"
 import ModalEditProjFirst from "./modals/ModalEditProjFirst"
 import ModalCommentFirst from "./modals/ModalCommentFirst"
+import ModalDetails from "./modals/ModalDetails"
 
 const ProjectTable = (props) => {
 
@@ -12,6 +13,7 @@ const ProjectTable = (props) => {
     const [opendelete, setOpendelete] = useState(false);
     const [openeditproj, setOpeneditproj] = useState(false);
     const [opencomment, setOpencomment] = useState(false);
+    const [opendetails, setOpendetails] = useState(false);
     const [projectid, setProjectid] = useState('');
     
     useEffect(() => {
@@ -51,7 +53,7 @@ const ProjectTable = (props) => {
                             <td>
                             <button onClick={() => {setOpeneditproj(true); setProjectid(project[0][0])}}>Edycja</button>
                             <button onClick={() => {setOpencomment(true); setProjectid(project[0][0])}}>Dodaj komentarz</button>
-                            <button>Szczegóły projektu</button>
+                            <button onClick={() => {setOpendetails(true); setProjectid(project[0][0])}}>Szczegóły projektu</button>
                             <button onClick={() => {setOpendelete(true); setProjectid(project[0][0])}}>Usuń</button>
                             </td>
                         </tr>
@@ -62,7 +64,8 @@ const ProjectTable = (props) => {
             {opencreate && <ModalCreateFirst closemodal={setOpencreate} email={props.email} />}
             {opendelete && <ModalDeleteFirst closemodal={setOpendelete} id={projectid} />}
             {openeditproj && <ModalEditProjFirst closemodal={setOpeneditproj} id={projectid} />}
-            {opencomment && <ModalCommentFirst closemodal={setOpencomment} id={projectid} email={props.email}/>}
+            {opencomment && <ModalCommentFirst closemodal={setOpencomment} opendetail={setOpendetails} id={projectid} email={props.email}/>}
+            {opendetails && <ModalDetails closemodal={setOpendetails} id={projectid} email={props.email}/>}
         </div>
         
     );

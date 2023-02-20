@@ -40,7 +40,7 @@ function LoginScreen() {
         <div>
             {openhome && <Home email={email} closehome={setOpenhome}/>}
             <form className='loginscreen_form' onSubmit={handleSubmit}>
-                <h1>Zaloguj się:</h1>
+                <h1 className='welcome'>Zaloguj się:</h1>
                 <input
                     type="email"
                     placeholder="Email"

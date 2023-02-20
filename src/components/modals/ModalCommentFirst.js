@@ -46,6 +46,7 @@ function ModalCommentFirst( props ) {
             {openmodal && <ModalCommentSecond 
             closeModal1={setOpenmodal} 
             closeModal2={props.closemodal}
+            opendetail={props.opendetail}
             comment={comment}
             id={props.id}
             email={props.email}

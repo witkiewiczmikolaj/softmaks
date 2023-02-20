@@ -12,6 +12,12 @@ def get_projects():
     data = request.get_json()
     return jsonify(get_users_projects(data))
 
+@app.route('/api/get_project_details', methods=['POST'])
+@cross_origin()
+def get_project_details():
+    data = request.get_json()
+    return jsonify(get_project_details_fcn(data))
+
 @app.route('/api/delete_project', methods=['POST'])
 @cross_origin()
 def delete_project():
