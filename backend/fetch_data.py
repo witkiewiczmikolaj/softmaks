@@ -191,6 +191,12 @@ def get_project_details_fcn(data):
     users = []
     for user in users_sql:
         users.append(user[1])
-    data = [details, users, comments, name]
+    is_owner = []
+    for commment in comments:
+        if commment[2] == details[6]:
+            is_owner.append(True)
+        else:
+            is_owner.append(False)
+    data = [details, users, comments, name, is_owner]
 
     return data

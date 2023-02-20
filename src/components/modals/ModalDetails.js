@@ -17,20 +17,6 @@ function ModalDetails( props ) {
             
         }
         fetchData();
-        let comment = () => {
-
-            let element = document.getElementById("user_comment");
-            if (projectdetails[2] != undefined) {
-                for(let i=0; i<projectdetails[2].length; i++) {
-                    if (projectdetails[2][i][2] != props.email) {
-                        element.setAttribute("style", "color:black");
-                    } else {
-                        element.setAttribute("style", "font-weight: bold; color: green;");
-                    }
-                }
-            }
-        }
-        comment(); //Do dopracowania
     }, []);
 
     let sorted_comments = []
@@ -61,8 +47,8 @@ function ModalDetails( props ) {
                                 <ul>
                                     {sorted_comments.map((comment, index) =>(
                                         <li key={index}>
-                                            <p id="user_comment">{comment[0]}</p>
-                                            <p><b>Dodane przez: {comment[2]}, dnia: {comment[1]}</b></p>
+                                            <p className={projectdetails[4][index] ? 'is_owner' : '' }>{comment[0]}</p>
+                                            <p><b>Dodane przez: {comment[2]} {comment[4]}, dnia: {comment[1]}</b></p>
                                         </li>
                                     ))}
                                 </ul>
