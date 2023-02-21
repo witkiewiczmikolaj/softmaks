@@ -28,28 +28,28 @@ const data_props = [props.name, props.description, props.start, props.end, props
                     <form onSubmit={handleSubmitUpdate}>
                         <input
                             type="text"
-                            placeholder={props.name}
+                            placeholder={props.name ? props.name : "Brak zmiany"}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.description}
+                            placeholder={props.description ? props.description : "Brak zmiany"}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.start}
+                            placeholder={props.start ? props.start : "Brak zmiany"}
                             disabled
                         /><br></br>
                         <input
                             type="text"
-                            placeholder={props.end}
+                            placeholder={props.end ? props.end : "Brak zmiany"}
                             disabled
                         /><br></br>
-                        <p className="users">{props.users}</p>
+                        <p className="users">{props.users[0] ? props.users : "Brak zmiany"}</p>
                         <input
                             type="text"
-                            placeholder={props.status}
+                            placeholder={props.status ? props.status : "Brak zmiany"}
                             disabled
                         /><br></br>
                         <div className="footer">

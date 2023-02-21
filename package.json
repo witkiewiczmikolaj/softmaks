@@ -13,7 +13,9 @@
     "react-select": "^5.7.0",
     "registry.npmjs.org": "^1.0.1",
     "web-vitals": "^2.1.4"
+  
   },
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -32,4 +34,5 @@
       "last 1 safari version"
     ]
   }
+  
 }
