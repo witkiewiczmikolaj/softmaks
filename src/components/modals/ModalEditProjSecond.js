@@ -64,6 +64,7 @@ const data_props = [props.name, props.description, props.start, props.end, props
                             placeholder={props.end}
                             disabled
                         /><br></br>
+                        <p className="users">{props.users}</p>
                         <input
                             type="text"
                             placeholder={props.status}
@@ -72,7 +73,7 @@ const data_props = [props.name, props.description, props.start, props.end, props
                         <div className="footer">
                             <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                             <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>
-                            <button id="submit_button_second" >Dalej</button>
+                            <button id="submit_button_second">Wykonaj</button>
                         </div> 
                     </form>
                 </div>

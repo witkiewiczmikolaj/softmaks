@@ -78,7 +78,15 @@
 .modal_container_det .users {
     margin-left: 100px;
     max-width: 80%;
-    overflow: auto;
+    overflow: scroll;
+    height: 50px;
+}
+
+.modal_container .users {
+    margin-left: 50px;
+    max-width: 80%;
+    overflow: scroll;
+    height: 70px;
 }
 
 .modal_container .body {
@@ -109,6 +117,14 @@
     padding-top: 8rem;
 }
 
+.modal_container .footer_edit {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}
+
 .modal_container_det .footer {
     flex: 20%;
     display: flex;
@@ -118,6 +134,17 @@
 }
 
 .footer button {
+    width: 7rem;
+    height: 3rem;
+    margin: 10px;
+    border: none;
+    color: white;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.footer_edit button {
     width: 7rem;
     height: 3rem;
     margin: 10px;

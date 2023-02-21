@@ -20,10 +20,13 @@ function ModalDetails( props ) {
     }, []);
 
     let sorted_comments = []
+    let users = []
     if (projectdetails[2] != undefined) {
         sorted_comments = projectdetails[2].sort((a, b) => new Date(a.date) - new Date(b.date))
+        users = projectdetails?.[1].map((user) =>(user + ", "))
     } else {
         sorted_comments = []
+        users = []
     }
    
     return (
@@ -39,7 +42,7 @@ function ModalDetails( props ) {
                         <p>Data rozpoczęcia: {projectdetails[0][3]}</p>
                         <p>Data zakończenia: {projectdetails[0][4]}</p>
                         <p>Lista użytkowników:</p>
-                        <p className="users">{projectdetails[1]}</p>
+                        <p className="users">{users}</p>
                         <p>Status: {projectdetails[0][5]}</p>
                         <p>Twórca projektu: {projectdetails?.[3]?.[0]} {projectdetails?.[3]?.[1]}</p>
                         <br></br>

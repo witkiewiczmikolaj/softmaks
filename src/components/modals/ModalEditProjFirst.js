@@ -1,14 +1,17 @@
 import React, { useState, useEffect }  from "react";
 import "./ModalEdit.css";
+import Select from 'react-select'
 import ModalEditProjSecond from "./ModalEditProjSecond";
 
 function ModalEditProjFirst( props ) {
-    const [projectdata, setProjectdata] = useState([[]]);
+    const [projectdata, setProjectdata] = useState([[[]]]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
     const [status, setStatus] = useState('');
+    const [users, setUsers] = useState([]);
+    const [usersfinal, setUsersfinal] = useState([]);
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleNameChange = (e) => {
@@ -30,6 +33,14 @@ function ModalEditProjFirst( props ) {
     const handleStatusChange = (e) => {
             setStatus(e.target.value);
     };
+
+    const handleUsersChange = (e) => {
+        let users_array = []
+        for(let i=0; i<e.length; i++) {
+            users_array.push(e[i]["value"])
+        }
+        setUsersfinal(users_array);
+};
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,10 +55,19 @@ function ModalEditProjFirst( props ) {
             });
             const project_data_response = await response_data.json();
             setProjectdata(project_data_response);
+            console.log(project_data_response[1])
+            const users_select = project_data_response[1] ? project_data_response[1].map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };
+            setUsers(users_select);
         }
         fetchData();
         }, [props.closemodal]);
 
+        let users_array = []
+        if (projectdata[2] != undefined) {
+            users_array = projectdata[2].map((user) =>(user + ", "))
+        } else {
+            users_array = []
+        }
     return (
         <div>
             <div className="modal_bg_first">  
@@ -59,35 +79,40 @@ function ModalEditProjFirst( props ) {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={"Nazwa: " + projectdata?.[0]?.[1]}
+                                placeholder={"Nazwa: " + projectdata?.[0]?.[0]?.[1]}
                                 value={name}
                                 onChange={handleNameChange}
                                 required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Opis: " + projectdata?.[0]?.[2]}
+                                placeholder={"Opis: " + projectdata?.[0]?.[0]?.[2]}
                                 value={description}
                                 onChange={handleDescriptionChange}
                                 required
                             /><br></br>
-                            <label>Stara data rozpoczęcia: {projectdata?.[0]?.[3]}</label>
+                            <label>Stara data rozpoczęcia: {projectdata?.[0]?.[0]?.[3]}</label>
                             <input
                                 type="date"
                                 value={start}
                                 onChange={handleStartChange}
                                 required
                             /><br></br>
-                            <label>Stara data zakończenia: {projectdata?.[0]?.[4]}</label>
+                            <label>Stara data zakończenia: {projectdata?.[0]?.[0]?.[4]}</label>
                             <input
                                 type="date"
                                 value={end}
                                 onChange={handleEndChange}
                                 required
                             /><br></br>
+                            <label>Stary wybór użytkowników:</label>
+                            <p className="users">{users_array}</p>
+                            <div className="select_div">
+                                <Select isMulti onChange={handleUsersChange} options={users} classNamePrefix="select"/>
+                            </div>
                             <input
                                 list="statuslist"
-                                placeholder={"Status: " + projectdata?.[0]?.[5]}
+                                placeholder={"Status: " + projectdata?.[0]?.[0]?.[5]}
                                 value={status}
                                 onChange={handleStatusChange}
                                 required
@@ -97,7 +122,7 @@ function ModalEditProjFirst( props ) {
                                 <option value="W TRAKCIE"/>
                                 <option value="ZAKOŃCZONY"/>
                             </datalist>
-                            <div className="footer">
+                            <div className="footer_edit">
                                 <button id="cancel_button" onClick={() => props.closemodal(false)}>Anuluj</button>
                                 <button 
                                 id="submit_button"
@@ -117,6 +142,7 @@ function ModalEditProjFirst( props ) {
             description={description}
             start={start}
             end={end}
+            users={usersfinal}
             status={status}
             id={props.id}
             />}

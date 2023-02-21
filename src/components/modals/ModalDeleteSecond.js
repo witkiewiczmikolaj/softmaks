@@ -25,7 +25,7 @@ function ModalDeleteSecond(props) {
                     <div className="footer">
                         <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                         <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>
-                        <button id="submit_button_second" onClick={handleDelete}>Dalej</button>
+                        <button id="submit_button_second" onClick={handleDelete}>Wykonaj</button>
                     </div> 
                 </div>
             </div>

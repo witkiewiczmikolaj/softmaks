@@ -71,7 +71,7 @@ const data_props = [props.name, props.description, props.startdate, props.enddat
                         <div className="footer">
                             <button id="cancel_button" onClick={() => props.closeModal2(false)}>Anuluj</button>
                             <button id="back_button" onClick={() => props.closeModal1(false)}>Powrót</button>
-                            <button id="submit_button_second" >Dalej</button>
+                            <button id="submit_button_second">Wykonaj</button>
                         </div> 
                     </form>
                 </div>

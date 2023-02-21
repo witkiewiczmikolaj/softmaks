@@ -134,6 +134,8 @@ def delete_project_fcn(data):
     c.commit()
     cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {project_id}")
     c.commit()
+    cur.execute(f"DELETE FROM COMMENTS WHERE project_id = {project_id}")
+    c.commit()
 
     return True
 
@@ -146,8 +148,14 @@ def get_project_data_fcn(data):
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
     data_response = cur.fetchall()
+    cur.execute(f"SELECT * FROM PROJECT_USERS WHERE project_id = {project_id}")
+    users_sql = cur.fetchall()
 
-    return data_response
+    users = []
+    for user in users_sql:
+        users.append(user[1])
+
+    return [data_response, get_users_email(), users]
 
 def update_project_data_fcn(data):
     data = data["data"]
