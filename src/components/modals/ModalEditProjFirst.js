@@ -55,7 +55,6 @@ function ModalEditProjFirst( props ) {
             });
             const project_data_response = await response_data.json();
             setProjectdata(project_data_response);
-            console.log(project_data_response[1])
             const users_select = project_data_response[1] ? project_data_response[1].map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };
             setUsers(users_select);
         }
@@ -82,28 +81,24 @@ function ModalEditProjFirst( props ) {
                                 placeholder={"Nazwa: " + projectdata?.[0]?.[0]?.[1]}
                                 value={name}
                                 onChange={handleNameChange}
-                                required
                             /><br></br>
                             <input
                                 type="text"
                                 placeholder={"Opis: " + projectdata?.[0]?.[0]?.[2]}
                                 value={description}
                                 onChange={handleDescriptionChange}
-                                required
                             /><br></br>
                             <label>Stara data rozpoczęcia: {projectdata?.[0]?.[0]?.[3]}</label>
                             <input
                                 type="date"
                                 value={start}
                                 onChange={handleStartChange}
-                                required
                             /><br></br>
                             <label>Stara data zakończenia: {projectdata?.[0]?.[0]?.[4]}</label>
                             <input
                                 type="date"
                                 value={end}
                                 onChange={handleEndChange}
-                                required
                             /><br></br>
                             <label>Stary wybór użytkowników:</label>
                             <p className="users">{users_array}</p>
@@ -115,7 +110,6 @@ function ModalEditProjFirst( props ) {
                                 placeholder={"Status: " + projectdata?.[0]?.[0]?.[5]}
                                 value={status}
                                 onChange={handleStatusChange}
-                                required
                             /><br></br>
                             <datalist id="statuslist">
                                 <option value="NOWY"/>
@@ -144,6 +138,7 @@ function ModalEditProjFirst( props ) {
             end={end}
             users={usersfinal}
             status={status}
+            email={props.email}
             id={props.id}
             />}
         </div>

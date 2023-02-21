@@ -63,7 +63,7 @@ const ProjectTable = (props) => {
             </div>
             {opencreate && <ModalCreateFirst closemodal={setOpencreate} email={props.email} />}
             {opendelete && <ModalDeleteFirst closemodal={setOpendelete} id={projectid} />}
-            {openeditproj && <ModalEditProjFirst closemodal={setOpeneditproj} id={projectid} />}
+            {openeditproj && <ModalEditProjFirst closemodal={setOpeneditproj} id={projectid} email={props.email}/>}
             {opencomment && <ModalCommentFirst closemodal={setOpencomment} opendetail={setOpendetails} id={projectid} email={props.email}/>}
             {opendetails && <ModalDetails closemodal={setOpendetails} id={projectid} email={props.email}/>}
         </div>

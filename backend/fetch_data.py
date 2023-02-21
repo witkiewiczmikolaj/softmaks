@@ -164,9 +164,15 @@ def update_project_data_fcn(data):
     except Exception as e:
         return f"{e}"
     
-    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = '{data[0]}', description = '{data[1]}', start_date = '{data[2]}', end_date = '{data[3]}', status = '{data[4]}' WHERE project_id = {data[5]};")
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{data[0]}' <> '' THEN '{data[0]}' ELSE name END, description = CASE WHEN '{data[1]}' <> '' THEN '{data[1]}' ELSE description END, start_date = CASE WHEN '{data[2]}' <> '' THEN '{data[2]}' ELSE start_date END, end_date = CASE WHEN '{data[3]}' <> '' THEN '{data[3]}' ELSE end_date END, status = CASE WHEN '{data[4]}' <> '' THEN '{data[4]}' ELSE status END WHERE project_id = {data[5]};")
     c.commit()
-   
+    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {data[5]}")
+    c.commit()
+    for email in data[6]:
+        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{data[5]}', '{email}');") 
+        c.commit()
+    cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{data[5]}', '{data[7]}');") 
+    c.commit()
     return True
 
 def add_comment_fcn(data):

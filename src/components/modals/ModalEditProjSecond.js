@@ -3,7 +3,7 @@ import "./ModalEdit.css";
 
 function ModalEditProjSecond(props) {
 
-const data_props = [props.name, props.description, props.start, props.end, props.status, props.id];
+const data_props = [props.name, props.description, props.start, props.end, props.status, props.id, props.users, props.email];
 
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
@@ -17,24 +17,6 @@ const data_props = [props.name, props.description, props.start, props.end, props
         console.log(data)
         props.closeModal2(false)
         };
-        useEffect(() => {
-            let toggle = () => {
-
-                let element = document.getElementById("submit_button_second");
-            
-                if (props.name === '' || 
-                props.description === '' || 
-                props.start === '' || 
-                props.end === '' || 
-                props.status === ''
-                ) {
-                   element.setAttribute("hidden", "hidden");
-                } else {
-                    element.removeAttribute("hidden");
-                }
-              }
-              toggle();
-          });
         
     return (
         <div className="modal_bg_second">  
