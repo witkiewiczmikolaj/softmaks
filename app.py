@@ -7,6 +7,7 @@ app = Flask(__name__, static_folder='forntend/build', static_url_path='')
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+
 @app.route('/api/get_projects', methods=['POST'])
 @cross_origin()
 def get_projects():
