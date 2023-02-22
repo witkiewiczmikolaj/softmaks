@@ -8,7 +8,7 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
         
-        const response = await fetch('http://localhost:5000/api/update_user_data', {
+        const response = await fetch('/api/update_user_data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({data: data_props}),

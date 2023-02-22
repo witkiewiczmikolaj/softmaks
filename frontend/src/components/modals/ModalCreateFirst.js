@@ -41,7 +41,7 @@ function ModalEditFirst( props ) {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('http://localhost:5000/api/get_users');
+            const response = await fetch('/api/get_users');
             const users_response = await response.json();
             
             const users_select = users_response ? users_response.map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };

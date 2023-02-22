@@ -7,7 +7,7 @@ function ModalDetails( props ) {
 
     useEffect(() => {
         async function fetchData() {
-            const response_data = await fetch('http://localhost:5000/api/get_project_details', {
+            const response_data = await fetch('/api/get_project_details', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({id: props.id}),

@@ -18,7 +18,7 @@ const ProjectTable = (props) => {
     
     useEffect(() => {
         async function fetchData() {
-            const response_data = await fetch('http://localhost:5000/api/get_projects', {
+            const response_data = await fetch('/api/get_projects', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({email: props.email}),

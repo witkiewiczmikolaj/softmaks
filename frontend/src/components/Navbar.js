@@ -9,7 +9,7 @@ function Navbar(props) {
 
   useEffect(() => {
     async function fetchData() {
-        const response_data = await fetch('http://localhost:5000/api/get_user_data', {
+        const response_data = await fetch('/api/get_user_data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email: props.email}),

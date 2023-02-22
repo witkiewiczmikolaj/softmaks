@@ -9,7 +9,7 @@ const data_props = [props.comment, props.id, props.email, currentTime];
 const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     
-    const response = await fetch('http://localhost:5000/api/add_comment', {
+    const response = await fetch('/api/add_comment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({data: data_props}),

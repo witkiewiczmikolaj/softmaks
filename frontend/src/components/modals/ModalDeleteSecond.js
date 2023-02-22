@@ -5,7 +5,7 @@ function ModalDeleteSecond(props) {
 
     const handleDelete = async () => {
         
-        const response = await fetch('http://localhost:5000/api/delete_project', {
+        const response = await fetch('/api/delete_project', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id: props.id}),
