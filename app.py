@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request
+from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 from fetch_data import *
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='forntend/build', static_url_path='')
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -72,5 +73,10 @@ def login():
     data = request.get_json()
     return jsonify(log_in(data))
 
+@app.route('/')
+@cross_origin()
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run()
