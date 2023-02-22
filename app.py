@@ -3,7 +3,7 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
 from fetch_data import *
 
-app = Flask(__name__, static_folder='forntend/build', static_url_path='')
+app = Flask(__name__, static_folder='frontend/build', static_url_path='')
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
