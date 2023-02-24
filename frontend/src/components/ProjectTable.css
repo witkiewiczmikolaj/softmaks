@@ -1,15 +1,21 @@
+.table_container {
+    height: 800px;
+    overflow: auto;
+}
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     font-size: 1.3rem;
+    table-layout: fixed;
 }
 
 th, td {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
+    word-wrap: break-word;
 }
 
 th {
@@ -17,18 +23,44 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f8f8;
 }
+
 tr button, .create_button {
     height: 2rem;
     margin: 5px;
     border: none;
-    border-radius: 2rem;
+    border-radius: 0.3rem;
     cursor: pointer;
-    background-color: rgba(200, 200, 200);
-    font-size: 1.3rem;
+    background-color: rgb(184, 184, 184);
+    font-size: 0.8rem;
 }
+
+tr button:hover, .create_button:hover {
+    background-color: rgb(124, 124, 124);
+}
+
+table td:nth-of-type(1) {
+    width: 30%;
+}
+
+table td:nth-of-type(5) {
+    width: 20%;
+}
+
 .create_button {
     margin-left: 20px;
     margin-top: 25px;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 0.6rem;
+    }
+
+    tr button, .create_button {
+        height: 1.5rem;
+        margin: 2px;
+        font-size: 0.6rem;
+    }
 }

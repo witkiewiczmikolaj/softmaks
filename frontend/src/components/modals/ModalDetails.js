@@ -50,7 +50,7 @@ function ModalDetails( props ) {
                                 <ul>
                                     {sorted_comments.map((comment, index) =>(
                                         <li key={index}>
-                                            <p className={projectdetails[4][index] ? 'is_owner' : '' }>{comment[0]}</p>
+                                            <p className={projectdetails[4][index] ? 'is_owner' : 'comment' }>{comment[0]}</p>
                                             <p><b>Dodane przez: {comment[2]} {comment[4]}, dnia: {comment[1]}</b></p>
                                         </li>
                                     ))}

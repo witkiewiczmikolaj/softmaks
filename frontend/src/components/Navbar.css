@@ -27,7 +27,7 @@ nav {
 }
 
 .logout_button:hover {
-    background-color: rgb(210, 0, 0);
+    background-color: rgb(155, 0, 0);
 }
 
 .userpanel_button, .logout_button {
@@ -49,3 +49,13 @@ nav {
     background-color: rgb(255, 0, 0);
 }
 
+@media screen and (max-width: 600px) {
+    .userpanel_button, .logout_button {
+        width: 5rem;
+        height: 2rem;
+        font-size: 0.7rem;
+    }
+    .message {
+        font-size: 1rem;
+    }
+}

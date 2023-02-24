@@ -31,12 +31,12 @@ def log_in(data):
     if email_check(email) != True and email_check(email) != False:
         return email_check(email)
     elif not email_check(email):
-        return 'The email you entered was incorrect'
+        return 'Nieprawidłowy email'
     else:
         if check_pass(email, password) != True and check_pass(email, password) != False:
             return check_pass(email, password)
         elif not check_pass(email, password):
-            return 'The password you entered was incorrect'
+            return 'Nieprawidłowe hasło'
         else:
             return True
 

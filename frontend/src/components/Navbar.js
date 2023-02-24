@@ -24,7 +24,7 @@ function Navbar(props) {
     <div>
         <nav>
             <div className='message'>
-                {data[0][0] ? <p>Hello {data[0][0]}!</p> : <p></p>}
+                {data[0][0] ? <p>Witaj {data[0][0]}!</p> : <p></p>}
             </div>
             <div className='buttons'>
                 <button
