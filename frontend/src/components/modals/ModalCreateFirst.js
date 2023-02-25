@@ -43,7 +43,8 @@ function ModalEditFirst( props ) {
         async function fetchData() {
             const response = await fetch('/api/get_users');
             const users_response = await response.json();
-            
+            users_response.splice(users_response.indexOf(props.email), 1);
+
             const users_select = users_response ? users_response.map((users_response) => ( { value: users_response, label: users_response })) : { value: '', label: '' };
             setUsers(users_select);
         }
