@@ -38,7 +38,7 @@ function ModalDetails( props ) {
                     </div>
                     <div className="body">
                         <p>Nazwa: {projectdetails[0][1]}</p>
-                        <p>Opis: {projectdetails[0][2]}</p>
+                        <p className="description">Opis: {projectdetails[0][2]}</p>
                         <p>Data rozpoczęcia: {projectdetails[0][3]}</p>
                         <p>Data zakończenia: {projectdetails[0][4]}</p>
                         <p>Lista użytkowników:</p>

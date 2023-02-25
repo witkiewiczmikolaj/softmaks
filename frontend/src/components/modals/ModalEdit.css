@@ -82,6 +82,16 @@
     background: transparent;
 }
 
+.description::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.description {
+    overflow: scroll;
+    max-height: 50px;
+}
+
 .modal_container_det .users {
     margin-left: 10%;
     max-width: 80%;
