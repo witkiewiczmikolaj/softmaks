@@ -12,7 +12,6 @@ def email_check(email):
         return False
     return True
 
-
 def check_pass(email, password_arg):
     try:
         cur, c = psql_connect()
@@ -24,6 +23,15 @@ def check_pass(email, password_arg):
     if password[0][0] == password_arg:
         return True
     return False
+
+def add_account(data):
+    try:
+        cur, c = psql_connect()
+    except Exception as e:
+        return f"{e}"
+    email, password, name, surname, age, sex, number = data["email"], data["pass"], data["name"], data["surname"], data["age"], data["sex"], data["number"]
+    cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password}', {age}, '{sex}', '{email}', {number});")
+    c.commit()
 
 def log_in(data):
     email = data["email"]
@@ -39,6 +47,17 @@ def log_in(data):
             return 'Nieprawidłowe hasło'
         else:
             return True
+
+def register_fcn(data):
+    email = data["email"]
+    if email_check(email):
+        return 'Istnieje konto powiązane z tym adresem email!'
+    else:
+        try:
+            add_account(data)
+            return True
+        except:
+            return 'Something went wrong!'
 
 def user_data(data):
     email = data["email"]

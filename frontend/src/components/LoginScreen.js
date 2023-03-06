@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Home from './Home';
+import ModalRegister from './modals/ModalRegister';
 import "./LoginScreen.css";
 
 function LoginScreen() {
@@ -7,6 +8,7 @@ function LoginScreen() {
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState(null);
     const [openhome, setOpenhome] = useState(false);
+    const [openregister, setOpenregister] = useState(false);
     
     const handleEmailChange = (e) => {
             setEmail(e.target.value);
@@ -56,6 +58,10 @@ function LoginScreen() {
                 <button type="submit">Zatwierdź</button>
                 {response ? <p>{response}</p> : <p></p>}
             </form>
+            <div className='footer_reg'>
+                <button className='register' onClick={() => {setOpenregister(true)}}>Zarejestruj się</button>
+            </div>
+            {openregister && <ModalRegister closeModal={setOpenregister}/>}
             <div>
                 <div class="wave"></div>
                 <div class="wave"></div>

@@ -73,6 +73,12 @@ def login():
     data = request.get_json()
     return jsonify(log_in(data))
 
+@app.route('/register', methods=['POST'])
+@cross_origin()
+def register():
+    data = request.get_json()
+    return jsonify(register_fcn(data))
+
 @app.route('/')
 @cross_origin()
 def serve():
