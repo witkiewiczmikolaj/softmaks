@@ -10,8 +10,6 @@ function ModalDeleteSecond(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id: props.id}),
         });
-        const data = await response.json();
-        console.log(data)
         props.closeModal2(false)
         };
 

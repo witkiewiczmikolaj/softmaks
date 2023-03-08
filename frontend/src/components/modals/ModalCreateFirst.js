@@ -10,6 +10,11 @@ function ModalEditFirst( props ) {
     const [users, setUsers] = useState([]);
     const [usersfinal, setUsersfinal] = useState([]);
     const [openmodal, setOpenmodal] = useState(false);
+    const [disable, setDisable] = useState(true);
+
+    if (startdate > enddate) {
+        setEnddate(startdate);
+    }
 
     const handleNameChange = (e) => {
             setName(e.target.value);
@@ -21,6 +26,7 @@ function ModalEditFirst( props ) {
 
     const handleStartdateChange = (e) => {
             setStartdate(e.target.value);
+            setDisable(false);
     };
 
     const handleEnddateChange = (e) => {
@@ -86,6 +92,8 @@ function ModalEditFirst( props ) {
                                 type="date"
                                 value={enddate}
                                 onChange={handleEnddateChange}
+                                min={startdate}
+                                disabled={disable}
                                 required
                             /><br></br>
                             <label>Dodaj użykowników:</label>

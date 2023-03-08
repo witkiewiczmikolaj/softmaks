@@ -4,12 +4,12 @@ import Select from 'react-select'
 import ModalEditProjSecond from "./ModalEditProjSecond";
 
 function ModalEditProjFirst( props ) {
-    const [projectdata, setProjectdata] = useState([[[]]]);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
+    const [projectdata, setProjectdata] = useState([]);
+    const [name, setName] = useState(projectdata?.[0]?.[0]?.[1]);
+    const [description, setDescription] = useState(projectdata?.[0]?.[0]?.[2]);
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState(projectdata?.[0]?.[0]?.[5]);
     const [users, setUsers] = useState([]);
     const [usersfinal, setUsersfinal] = useState([]);
     const [openmodal, setOpenmodal] = useState(false);
@@ -78,14 +78,14 @@ function ModalEditProjFirst( props ) {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={"Nazwa: " + projectdata?.[0]?.[0]?.[1]}
-                                value={name}
+                                placeholder={"Nazwa:"}
+                                value={projectdata?.[0]?.[0]?.[1] ?? name}
                                 onChange={handleNameChange}
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Opis: " + projectdata?.[0]?.[0]?.[2]}
-                                value={description}
+                                placeholder={"Opis:"}
+                                value={projectdata?.[0]?.[0]?.[2] ?? description}
                                 onChange={handleDescriptionChange}
                             /><br></br>
                             <label>Stara data rozpoczęcia: {projectdata?.[0]?.[0]?.[3]}</label>
@@ -107,8 +107,8 @@ function ModalEditProjFirst( props ) {
                             </div>
                             <input
                                 list="statuslist"
-                                placeholder={"Status: " + projectdata?.[0]?.[0]?.[5]}
-                                value={status}
+                                placeholder={"Status:"}
+                                value={projectdata?.[0]?.[0]?.[5] ?? status}
                                 onChange={handleStatusChange}
                             /><br></br>
                             <datalist id="statuslist">

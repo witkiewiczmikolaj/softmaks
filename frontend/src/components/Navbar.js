@@ -24,7 +24,7 @@ function Navbar(props) {
     <div>
         <nav>
             <div className='message'>
-                {data[0][0] ? <p>Witaj {data[0][0]}!</p> : <p></p>}
+                {data?.[0]?.[0] ? <p>Witaj {data[0][0]}!</p> : <p></p>}
             </div>
             <div className='buttons'>
                 <button
@@ -35,7 +35,7 @@ function Navbar(props) {
                 >
                   Zmień dane
                 </button>
-                {openmodal && <ModalEditFirst closeModal={setOpenmodal} data={data}/>}
+                {openmodal && <ModalEditFirst closehome={props.closehome} closeModal={setOpenmodal} data={data}/>}
                 <button className='logout_button' onClick={() => {props.closehome(false)}}>Wyloguj</button>
             </div>
         </nav>

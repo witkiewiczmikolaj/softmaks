@@ -3,13 +3,13 @@ import "./ModalEdit.css";
 import ModalEditSecond from "./ModalEditSecond";
 
 function ModalEditFirst( props ) {
-    const [uname, setUname] = useState('');
-    const [usurname, setUsurname] = useState('');
-    const [email, setEmail] = useState('');
+    const [uname, setUname] = useState(props.data?.[0]?.[0]);
+    const [usurname, setUsurname] = useState(props.data?.[0]?.[1]);
+    const [email, setEmail] = useState(props.data?.[0]?.[5]);
     const [password, setPassword] = useState('');
-    const [age, setAge] = useState('');
-    const [sex, setSex] = useState('');
-    const [number, setNumber] = useState('');
+    const [age, setAge] = useState(props.data?.[0]?.[3]);
+    const [sex, setSex] = useState(props.data?.[0]?.[4]);
+    const [number, setNumber] = useState(props.data?.[0]?.[6]);
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleEmailChange = (e) => {
@@ -55,28 +55,28 @@ function ModalEditFirst( props ) {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder={"Imię: " + props.data?.[0]?.[0]}
+                                placeholder={"Imię:"}
                                 value={uname}
                                 onChange={handleUnameChange}
                                 required
                             /><br></br>
                             <input
                                 type="text"
-                                placeholder={"Nazwisko: " + props.data?.[0]?.[1]}
+                                placeholder={"Nazwisko:"}
                                 value={usurname}
                                 onChange={handleUsurnameChange}
                                 required
                             /><br></br>
                             <input
-                                type="text"
-                                placeholder={"Hasło: " + props.data?.[0]?.[2]}
+                                type="password"
+                                placeholder="Nowe hasło:"
                                 value={password}
                                 onChange={handlePasswordChange}
                                 required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={"Wiek: " + props.data?.[0]?.[3]}
+                                placeholder={"Wiek:"}
                                 value={age}
                                 onChange={handleAgeChange}
                                 required
@@ -85,7 +85,7 @@ function ModalEditFirst( props ) {
                             /><br></br>
                             <input
                                 list="sexlist"
-                                placeholder={"Płeć: " + props.data?.[0]?.[4]}
+                                placeholder={"Płeć:"}
                                 value={sex}
                                 onChange={handleSexChange}
                                 required
@@ -97,14 +97,14 @@ function ModalEditFirst( props ) {
                             <br></br>
                             <input
                                 type="text"
-                                placeholder={"Email: " + props.data?.[0]?.[5]}
+                                placeholder={"Email:"}
                                 value={email}
                                 onChange={handleEmailChange}
                                 required
                             /><br></br>
                             <input
                                 type="number"
-                                placeholder={"Numer telefonu: " + props.data?.[0]?.[6]}
+                                placeholder={"Numer telefonu:"}
                                 value={number}
                                 onChange={handleNumberChange}
                                 min={100000000}
@@ -126,6 +126,7 @@ function ModalEditFirst( props ) {
             {openmodal && <ModalEditSecond 
             closeModal1={setOpenmodal} 
             closeModal2={props.closeModal}
+            closehome={props.closehome}
             uname={uname}
             usurname={usurname}
             email={email}

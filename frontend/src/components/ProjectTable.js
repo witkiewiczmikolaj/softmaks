@@ -8,7 +8,7 @@ import ModalDetails from "./modals/ModalDetails"
 
 const ProjectTable = (props) => {
 
-    const [projects, setProjects] = useState([[[]]]);
+    const [projects, setProjects] = useState([]);
     const [opencreate, setOpencreate] = useState(false);
     const [opendelete, setOpendelete] = useState(false);
     const [openeditproj, setOpeneditproj] = useState(false);

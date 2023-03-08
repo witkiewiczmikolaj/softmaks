@@ -12,8 +12,6 @@ const data_props = [props.name, props.description, props.startdate, props.enddat
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({data: data_props}),
         });
-        const data = await response.json();
-        console.log(data)
         props.closeModal2(false)
         };
         useEffect(() => {

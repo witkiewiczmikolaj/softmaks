@@ -19,6 +19,7 @@ function LoginScreen() {
     };
 
     const handleSubmit = async (e) => {
+        setResponse(null);
         e.preventDefault();
         try{
         const response_login = await fetch('/login', {
@@ -32,7 +33,7 @@ function LoginScreen() {
             setOpenhome(true);
             setPassword('');
         } else {
-            setResponse(login);
+            setResponse("Nieprawidłowe dane do logowania");
         }} catch (error) {
             console.error(error);
         }

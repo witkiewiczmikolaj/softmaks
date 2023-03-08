@@ -48,11 +48,10 @@ function ModalRegister( props ) {
             body: JSON.stringify({email: email, pass: password, name: uname, surname: usurname, age: age, sex: sex, number: number}),
         });
         const register = await response_register.json();
-        console.log(register)
         if (register === true) {
             props.closeModal(false);
         } else {
-            setResponse(register);
+            setResponse("Istnieje już konto powiązane z tym emailem");
         }} catch (error) {
             console.error(error);
         }

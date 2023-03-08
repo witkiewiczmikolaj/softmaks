@@ -10,74 +10,62 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/api/get_projects', methods=['POST'])
 @cross_origin()
 def get_projects():
-    data = request.get_json()
-    return jsonify(get_users_projects(data))
+    return jsonify(get_users_projects(request.get_json()))
 
 @app.route('/api/get_project_details', methods=['POST'])
 @cross_origin()
 def get_project_details():
-    data = request.get_json()
-    return jsonify(get_project_details_fcn(data))
+    return jsonify(get_project_details_fcn(request.get_json()))
 
 @app.route('/api/delete_project', methods=['POST'])
 @cross_origin()
 def delete_project():
-    data = request.get_json()
-    return jsonify(delete_project_fcn(data))
+    return jsonify(delete_project_fcn(request.get_json()))
 
 @app.route('/api/get_users', methods=['GET'])
 @cross_origin()
 def get_users():
-    data = get_users_email()
-    return jsonify(data)
+    return jsonify(get_users_email())
 
 @app.route('/api/get_user_data', methods=['POST'])
 @cross_origin()
 def get_user_data():
-    data = request.get_json()
-    return jsonify(user_data(data))
+    return jsonify(user_data(request.get_json()))
 
 @app.route('/api/get_project_data', methods=['POST'])
 @cross_origin()
 def get_project_data():
-    data = request.get_json()
-    return jsonify(get_project_data_fcn(data))
+    return jsonify(get_project_data_fcn(request.get_json()))
 
 @app.route('/api/update_project_data', methods=['POST'])
 @cross_origin()
 def update_project_data():
-    data = request.get_json()
-    return jsonify(update_project_data_fcn(data))
+    return jsonify(update_project_data_fcn(request.get_json()))
 
 @app.route('/api/add_comment', methods=['POST'])
 @cross_origin()
 def add_comment():
-    data = request.get_json()
-    return jsonify(add_comment_fcn(data))
+    return jsonify(add_comment_fcn(request.get_json()))
 
 @app.route('/api/create_project', methods=['POST'])
 @cross_origin()
 def create_project():
-    data = request.get_json()
-    return jsonify(create_new_project(data))
+    return jsonify(create_new_project(request.get_json()))
 
 @app.route('/api/update_user_data', methods=['POST'])
 @cross_origin()
 def update_user_data():
-    data = request.get_json()
-    return jsonify(update_user(data))
+    return jsonify(update_user(request.get_json()))
 
 @app.route('/login', methods=['POST'])
 @cross_origin()
 def login():
-    data = request.get_json()
-    return jsonify(log_in(data))
+    return jsonify(log_in(request.get_json()))
 
 @app.route('/register', methods=['POST'])
 @cross_origin()
 def register():
-    data = request.get_json()
-    return jsonify(register_fcn(data))
+    return jsonify(register_fcn(request.get_json()))
 
 @app.route('/')
 @cross_origin()

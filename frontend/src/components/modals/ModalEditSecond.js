@@ -13,9 +13,8 @@ const data_props = [props.uname, props.usurname, props.password, props.age, prop
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({data: data_props}),
         });
-        const data = await response.json();
-        console.log(data)
         props.closeModal2(false)
+        props.closehome(false)
         };
         useEffect(() => {
             let toggle = () => {

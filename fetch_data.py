@@ -1,10 +1,14 @@
-from psql import *
+from psql import psql_connect
 
-def email_check(email):
+def psql_connection():
     try:
         cur, c = psql_connect()
+        return cur, c
     except Exception as e:
-        return f"{e}"
+        return f"{e}", ''
+
+def email_check(email):
+    cur, c = psql_connection()
 
     cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     emails_sql = cur.fetchone()
@@ -13,10 +17,7 @@ def email_check(email):
     return True
 
 def check_pass(email, password_arg):
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     
     cur.execute(f"SELECT password FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     password = cur.fetchall()
@@ -25,10 +26,7 @@ def check_pass(email, password_arg):
     return False
 
 def add_account(data):
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     email, password, name, surname, age, sex, number = data["email"], data["pass"], data["name"], data["surname"], data["age"], data["sex"], data["number"]
     cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password}', {age}, '{sex}', '{email}', {number});")
     c.commit()
@@ -36,35 +34,25 @@ def add_account(data):
 def log_in(data):
     email = data["email"]
     password = data["pass"]
-    if email_check(email) != True and email_check(email) != False:
-        return email_check(email)
-    elif not email_check(email):
-        return 'Nieprawidłowy email'
-    else:
-        if check_pass(email, password) != True and check_pass(email, password) != False:
-            return check_pass(email, password)
-        elif not check_pass(email, password):
-            return 'Nieprawidłowe hasło'
-        else:
+    if email_check(email):
+        if check_pass(email, password):
             return True
+        else:
+            return False
+    else:
+        return False
 
 def register_fcn(data):
     email = data["email"]
     if email_check(email):
-        return 'Istnieje konto powiązane z tym adresem email!'
+        return False
     else:
-        try:
-            add_account(data)
-            return True
-        except:
-            return 'Something went wrong!'
+        add_account(data)
+        return True
 
 def user_data(data):
     email = data["email"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     data = cur.fetchall()
@@ -72,30 +60,25 @@ def user_data(data):
 
 def update_user(data):
     data = data["data"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     if data[6] == '':
-        try:
-            cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}' WHERE email = '{data[7]}';")
-            c.commit()
-        except Exception as e:
-            return f"{e}"
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}' WHERE email = '{data[7]}';")
+        c.commit()
+
     else:
-        try:
-            cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[7]}';")
-            c.commit()
-        except Exception as e:
-            return f"{e}"
-    
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[7]}';")
+        c.commit()
+
+    cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{data[5]}' WHERE user_email = '{data[7]}';")
+    c.commit()
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET created_by = '{data[5]}' WHERE created_by = '{data[7]}';")
+    c.commit()
+    cur.execute(f"UPDATE COMMENTS SET user_email = '{data[5]}' WHERE user_email = '{data[7]}';")
+    c.commit()
     return True
 
 def get_users_email():
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     cur.execute("SELECT email FROM ACCOUNTS_SOFTMAKS")
     data = cur.fetchall()
     everyemail = []
@@ -106,10 +89,7 @@ def get_users_email():
     
 def get_users_projects(data):
     email = data["email"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
 
     cur.execute(f"SELECT project_id FROM PROJECT_USERS where user_email = '{email}'")
     data = cur.fetchall()
@@ -123,10 +103,7 @@ def get_users_projects(data):
 
 def create_new_project(data):
     data = data["data"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     try:
         cur.execute(f"INSERT INTO PROJECTS_SOFTMAKS (name, description, start_date, end_date, status, created_by) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', 'NOWY', '{data[5]}');")
         c.commit()
@@ -144,10 +121,7 @@ def create_new_project(data):
 
 def delete_project_fcn(data):
     project_id = data["id"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
 
     cur.execute(f"DELETE FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
     c.commit()
@@ -160,10 +134,7 @@ def delete_project_fcn(data):
 
 def get_project_data_fcn(data):
     project_id = data["id"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
     data_response = cur.fetchall()
@@ -178,10 +149,7 @@ def get_project_data_fcn(data):
 
 def update_project_data_fcn(data):
     data = data["data"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     
     cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{data[0]}' <> '' THEN '{data[0]}' ELSE name END, description = CASE WHEN '{data[1]}' <> '' THEN '{data[1]}' ELSE description END, start_date = CASE WHEN '{data[2]}' <> '' THEN '{data[2]}' ELSE start_date END, end_date = CASE WHEN '{data[3]}' <> '' THEN '{data[3]}' ELSE end_date END, status = CASE WHEN '{data[4]}' <> '' THEN '{data[4]}' ELSE status END WHERE project_id = {data[5]};")
     c.commit()
@@ -196,10 +164,7 @@ def update_project_data_fcn(data):
 
 def add_comment_fcn(data):
     data = data["data"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
     
     cur.execute(f"INSERT INTO COMMENTS (text, date, user_email, project_id) VALUES ('{data[0]}', '{data[3]}', '{data[2]}', {data[1]});")
     c.commit()
@@ -208,10 +173,7 @@ def add_comment_fcn(data):
 
 def get_project_details_fcn(data):
     project_id = data["id"]
-    try:
-        cur, c = psql_connect()
-    except Exception as e:
-        return f"{e}"
+    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id}")
     details = cur.fetchone()
