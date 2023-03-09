@@ -3,15 +3,13 @@ import "./ModalEdit.css";
 
 function ModalEditSecond(props) {
 
-const data_props = [props.uname, props.usurname, props.password, props.age, props.sex, props.email, props.number, props.oldemail];
-
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
         
         const response = await fetch('/api/update_user_data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({data: data_props}),
+            body: JSON.stringify({name: props.uname, surname: props.usurname, password: props.password, age: props.age, sex: props.sex, email: props.email, number: props.number, oldemail: props.oldemail}),
         });
         props.closeModal2(false)
         props.closehome(false)

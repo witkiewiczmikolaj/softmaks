@@ -46,15 +46,15 @@ const ProjectTable = (props) => {
                     <tbody>
                     {projects ? projects.map((project, index) => (
                         <tr key={index}>
-                            <td>{project[0][1]}</td>
-                            <td>{project[0][3]}</td>
-                            <td>{project[0][4]}</td>
-                            <td>{project[0][5]}</td>
+                            <td>{project.name}</td>
+                            <td>{project.start}</td>
+                            <td>{project.end}</td>
+                            <td>{project.status}</td>
                             <td>
-                            <button onClick={() => {setOpeneditproj(true); setProjectid(project[0][0])}}>Edycja</button>
-                            <button onClick={() => {setOpencomment(true); setProjectid(project[0][0])}}>Dodaj komentarz</button>
-                            <button onClick={() => {setOpendetails(true); setProjectid(project[0][0])}}>Szczegóły projektu</button>
-                            <button onClick={() => {setOpendelete(true); setProjectid(project[0][0])}}>Usuń</button>
+                            <button onClick={() => {setOpeneditproj(true); setProjectid(project.id)}}>Edycja</button>
+                            <button onClick={() => {setOpencomment(true); setProjectid(project.id)}}>Dodaj komentarz</button>
+                            <button onClick={() => {setOpendetails(true); setProjectid(project.id)}}>Szczegóły projektu</button>
+                            <button onClick={() => {setOpendelete(true); setProjectid(project.id)}}>Usuń</button>
                             </td>
                         </tr>
                         )) : <tr><td></td></tr>}

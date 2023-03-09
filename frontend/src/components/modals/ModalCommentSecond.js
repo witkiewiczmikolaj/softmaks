@@ -12,7 +12,7 @@ const handleSubmitUpdate = async (e) => {
     const response = await fetch('/api/add_comment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({data: data_props}),
+        body: JSON.stringify({comment: props.comment, id: props.id, email: props.email, time: currentTime}),
     });
     props.closeModal2(false);
     props.opendetail(true);

@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./ModalEdit.css";
 
 function ModalEditProjSecond(props) {
-
-const data_props = [props.name, props.description, props.start, props.end, props.status, props.id, props.users, props.email];
 
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
@@ -11,7 +9,7 @@ const data_props = [props.name, props.description, props.start, props.end, props
         const response = await fetch('/api/update_project_data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({data: data_props}),
+            body: JSON.stringify({name: props.name, description: props.description, start: props.start, end: props.end, status: props.status, id: props.id, users: props.users, email: props.email}),
         });
         props.closeModal2(false)
         };

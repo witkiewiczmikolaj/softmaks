@@ -3,13 +3,13 @@ import "./ModalEdit.css";
 import ModalEditSecond from "./ModalEditSecond";
 
 function ModalEditFirst( props ) {
-    const [uname, setUname] = useState(props.data?.[0]?.[0]);
-    const [usurname, setUsurname] = useState(props.data?.[0]?.[1]);
-    const [email, setEmail] = useState(props.data?.[0]?.[5]);
+    const [uname, setUname] = useState(props.data.name);
+    const [usurname, setUsurname] = useState(props.data.surname);
+    const [email, setEmail] = useState(props.data.email);
     const [password, setPassword] = useState('');
-    const [age, setAge] = useState(props.data?.[0]?.[3]);
-    const [sex, setSex] = useState(props.data?.[0]?.[4]);
-    const [number, setNumber] = useState(props.data?.[0]?.[6]);
+    const [age, setAge] = useState(props.data.age);
+    const [sex, setSex] = useState(props.data.sex);
+    const [number, setNumber] = useState(props.data.number);
     const [openmodal, setOpenmodal] = useState(false);
 
     const handleEmailChange = (e) => {
@@ -134,7 +134,7 @@ function ModalEditFirst( props ) {
             sex={sex}
             age={age}
             number={number}
-            oldemail={props.data?.[0]?.[5]}
+            oldemail={props.oldemail}
             />}
         </div>
         

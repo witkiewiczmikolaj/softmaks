@@ -1,14 +1,8 @@
 from psql import psql_connect
 
-def psql_connection():
-    try:
-        cur, c = psql_connect()
-        return cur, c
-    except Exception as e:
-        return f"{e}", ''
+cur, c = psql_connect()
 
 def email_check(email):
-    cur, c = psql_connection()
 
     cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     emails_sql = cur.fetchone()
@@ -17,7 +11,6 @@ def email_check(email):
     return True
 
 def check_pass(email, password_arg):
-    cur, c = psql_connection()
     
     cur.execute(f"SELECT password FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     password = cur.fetchall()
@@ -26,7 +19,6 @@ def check_pass(email, password_arg):
     return False
 
 def add_account(data):
-    cur, c = psql_connection()
     email, password, name, surname, age, sex, number = data["email"], data["pass"], data["name"], data["surname"], data["age"], data["sex"], data["number"]
     cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password}', {age}, '{sex}', '{email}', {number});")
     c.commit()
@@ -52,33 +44,32 @@ def register_fcn(data):
 
 def user_data(data):
     email = data["email"]
-    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
-    data = cur.fetchall()
+    data = cur.fetchone()
+    keys = ["name", "surname", "password", "age", "sex", "email", "number"]
+    data = {keys[i]: data[i] for i in range(len(keys))}
     return data
 
 def update_user(data):
-    data = data["data"]
-    cur, c = psql_connection()
-    if data[6] == '':
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}' WHERE email = '{data[7]}';")
+    name, surname, password, age, sex, email, number, oldemail = data["name"], data["surname"], data["password"], data["age"], data["sex"], data["email"], data["number"], data["oldemail"]
+    if number == '':
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password}', age = {age}, sex = '{sex}', email = '{email}' WHERE email = '{oldemail}';")
         c.commit()
 
     else:
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{data[0]}', surname = '{data[1]}', password = '{data[2]}', age = {data[3]}, sex = '{data[4]}', email = '{data[5]}', number = {data[6]} WHERE email = '{data[7]}';")
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password}', age = {age}, sex = '{sex}', email = '{email}', number = {number} WHERE email = '{oldemail}';")
         c.commit()
 
-    cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{data[5]}' WHERE user_email = '{data[7]}';")
+    cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
     c.commit()
-    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET created_by = '{data[5]}' WHERE created_by = '{data[7]}';")
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET created_by = '{email}' WHERE created_by = '{oldemail}';")
     c.commit()
-    cur.execute(f"UPDATE COMMENTS SET user_email = '{data[5]}' WHERE user_email = '{data[7]}';")
+    cur.execute(f"UPDATE COMMENTS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
     c.commit()
     return True
 
 def get_users_email():
-    cur, c = psql_connection()
     cur.execute("SELECT email FROM ACCOUNTS_SOFTMAKS")
     data = cur.fetchall()
     everyemail = []
@@ -89,21 +80,31 @@ def get_users_email():
     
 def get_users_projects(data):
     email = data["email"]
-    cur, c = psql_connection()
 
     cur.execute(f"SELECT project_id FROM PROJECT_USERS where user_email = '{email}'")
     data = cur.fetchall()
-    projects_array =[]
+    projects_array = []
+    keys = ["id", "name", "description", "start", "end", "status", "owner"]
+    projects_array.append(keys)
     for project_id in data:
         cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id[0]}")
-        projects = cur.fetchall()
+        projects = cur.fetchone()
         projects_array.append(projects)
+    
+    result = []
+    num_arrays = len(projects_array)
+    num_items = len(projects_array[0])
 
-    return projects_array
+    for i in range(1, num_arrays):
+        temp_dict = {}
+        for j in range(num_items):
+            temp_dict[projects_array[0][j]] = projects_array[i][j]
+        result.append(temp_dict)
+        
+    return result
 
 def create_new_project(data):
     data = data["data"]
-    cur, c = psql_connection()
     try:
         cur.execute(f"INSERT INTO PROJECTS_SOFTMAKS (name, description, start_date, end_date, status, created_by) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', 'NOWY', '{data[5]}');")
         c.commit()
@@ -121,7 +122,6 @@ def create_new_project(data):
 
 def delete_project_fcn(data):
     project_id = data["id"]
-    cur, c = psql_connection()
 
     cur.execute(f"DELETE FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
     c.commit()
@@ -134,46 +134,51 @@ def delete_project_fcn(data):
 
 def get_project_data_fcn(data):
     project_id = data["id"]
-    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
-    data_response = cur.fetchall()
+    data_response = cur.fetchone()
     cur.execute(f"SELECT * FROM PROJECT_USERS WHERE project_id = {project_id}")
     users_sql = cur.fetchall()
-
+    
     users = []
     for user in users_sql:
         users.append(user[1])
+    
+    data_response_temp = list(data_response)
+    data_response_temp.append([])
+    data_response_temp.append([])
 
-    return [data_response, get_users_email(), users]
+    keys = ["id", "name", "description", "start", "end", "status", "owner", "allusers", "currentusers"]
+    json = {keys[i]: data_response_temp[i] for i in range(len(keys))}
+    json["allusers"].append(get_users_email())
+    json["currentusers"].append(users)
+
+    return json
 
 def update_project_data_fcn(data):
-    data = data["data"]
-    cur, c = psql_connection()
+    name, description, start, end, status, id, users, email = data["name"], data["description"], data["start"], data["end"], data["status"], data["id"], data["users"], data["email"]
     
-    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{data[0]}' <> '' THEN '{data[0]}' ELSE name END, description = CASE WHEN '{data[1]}' <> '' THEN '{data[1]}' ELSE description END, start_date = CASE WHEN '{data[2]}' <> '' THEN '{data[2]}' ELSE start_date END, end_date = CASE WHEN '{data[3]}' <> '' THEN '{data[3]}' ELSE end_date END, status = CASE WHEN '{data[4]}' <> '' THEN '{data[4]}' ELSE status END WHERE project_id = {data[5]};")
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{name}' <> '' THEN '{name}' ELSE name END, description = CASE WHEN '{description}' <> '' THEN '{description}' ELSE description END, start_date = CASE WHEN '{start}' <> '' THEN '{start}' ELSE start_date END, end_date = CASE WHEN '{end}' <> '' THEN '{end}' ELSE end_date END, status = CASE WHEN '{status}' <> '' THEN '{status}' ELSE status END WHERE project_id = {id};")
     c.commit()
-    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {data[5]}")
+    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {id}")
     c.commit()
-    for email in data[6]:
-        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{data[5]}', '{email}');") 
+    for email_user in users:
+        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{id}', '{email_user}');") 
         c.commit()
-    cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{data[5]}', '{data[7]}');") 
+    cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{id}', '{email}');") 
     c.commit()
     return True
 
 def add_comment_fcn(data):
-    data = data["data"]
-    cur, c = psql_connection()
+    comment, id, email, time = data["comment"], data["id"], data["email"], data["time"]
     
-    cur.execute(f"INSERT INTO COMMENTS (text, date, user_email, project_id) VALUES ('{data[0]}', '{data[3]}', '{data[2]}', {data[1]});")
+    cur.execute(f"INSERT INTO COMMENTS (text, date, user_email, project_id) VALUES ('{comment}', '{time}', '{email}', {id});")
     c.commit()
    
     return True
 
 def get_project_details_fcn(data):
     project_id = data["id"]
-    cur, c = psql_connection()
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id}")
     details = cur.fetchone()
@@ -192,6 +197,18 @@ def get_project_details_fcn(data):
             is_owner.append(True)
         else:
             is_owner.append(False)
-    data = [details, users, comments, name, is_owner]
 
-    return data
+    details_temp = list(details)
+    details_temp.append([])
+    details_temp.append([])
+    details_temp.append([])
+    details_temp.append([])
+
+    keys = ["id", "name", "description", "start", "end", "status", "owner", "currentusers", "comments", "ownerdata", "isowner"]
+    json = {keys[i]: details_temp[i] for i in range(len(keys))}
+    json["currentusers"].append(users)
+    json["comments"].append(comments)
+    json["ownerdata"].append(name)
+    json["isowner"].append(is_owner)
+
+    return json
