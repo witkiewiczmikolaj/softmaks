@@ -1,33 +1,39 @@
 from psql import psql_connect
-
-cur, c = psql_connect()
+from hashlib import sha256
 
 def email_check(email):
-
+    cur, c = psql_connect()
     cur.execute(f"SELECT email FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     emails_sql = cur.fetchone()
     if not emails_sql:
         return False
     return True
 
-def check_pass(email, password_arg):
-    
+def check_pass(email, password_hash):
+    cur, c = psql_connect()
     cur.execute(f"SELECT password FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     password = cur.fetchall()
-    if password[0][0] == password_arg:
+    if password[0][0] == password_hash:
         return True
     return False
 
-def add_account(data):
-    email, password, name, surname, age, sex, number = data["email"], data["pass"], data["name"], data["surname"], data["age"], data["sex"], data["number"]
-    cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password}', {age}, '{sex}', '{email}', {number});")
-    c.commit()
+def hash_password(password):
+    h = sha256()
+    h.update(password.encode())
+    return h.hexdigest()
 
+def add_account(data):
+    cur, c = psql_connect()
+    email, name, surname, age, sex, number = data["email"], data["name"], data["surname"], data["age"], data["sex"], data["number"]
+    password_hash = hash_password(data["pass"])
+    cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password_hash}', {age}, '{sex}', '{email}', {number});")
+    c.commit()
+    
 def log_in(data):
     email = data["email"]
-    password = data["pass"]
+    password_hash = hash_password(data["pass"])
     if email_check(email):
-        if check_pass(email, password):
+        if check_pass(email, password_hash):
             return True
         else:
             return False
@@ -43,22 +49,24 @@ def register_fcn(data):
         return True
 
 def user_data(data):
+    cur, c = psql_connect()
     email = data["email"]
-
     cur.execute(f"SELECT * FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
     data = cur.fetchone()
+    data_temp = list(data)
     keys = ["name", "surname", "password", "age", "sex", "email", "number"]
-    data = {keys[i]: data[i] for i in range(len(keys))}
-    return data
+    data_temp = {keys[i]: data_temp[i] for i in range(len(keys))}
+    return data_temp
 
 def update_user(data):
-    name, surname, password, age, sex, email, number, oldemail = data["name"], data["surname"], data["password"], data["age"], data["sex"], data["email"], data["number"], data["oldemail"]
+    cur, c = psql_connect()
+    name, surname, age, sex, email, number, oldemail = data["name"], data["surname"], data["age"], data["sex"], data["email"], data["number"], data["oldemail"]
+    password_hash = hash_password(data["password"])
     if number == '':
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password}', age = {age}, sex = '{sex}', email = '{email}' WHERE email = '{oldemail}';")
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password_hash}', age = {age}, sex = '{sex}', email = '{email}' WHERE email = '{oldemail}';")
         c.commit()
-
     else:
-        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password}', age = {age}, sex = '{sex}', email = '{email}', number = {number} WHERE email = '{oldemail}';")
+        cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password_hash}', age = {age}, sex = '{sex}', email = '{email}', number = {number} WHERE email = '{oldemail}';")
         c.commit()
 
     cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
@@ -70,6 +78,7 @@ def update_user(data):
     return True
 
 def get_users_email():
+    cur, c = psql_connect()
     cur.execute("SELECT email FROM ACCOUNTS_SOFTMAKS")
     data = cur.fetchall()
     everyemail = []
@@ -79,8 +88,8 @@ def get_users_email():
     return everyemail
     
 def get_users_projects(data):
+    cur, c = psql_connect()
     email = data["email"]
-
     cur.execute(f"SELECT project_id FROM PROJECT_USERS where user_email = '{email}'")
     data = cur.fetchall()
     projects_array = []
@@ -104,35 +113,32 @@ def get_users_projects(data):
     return result
 
 def create_new_project(data):
-    data = data["data"]
-    try:
-        cur.execute(f"INSERT INTO PROJECTS_SOFTMAKS (name, description, start_date, end_date, status, created_by) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', 'NOWY', '{data[5]}');")
+    cur, c = psql_connect()
+    name, description, start, end, users, email = data["name"], data["description"], data["start"], data["end"], data["users"], data["email"]
+   
+    cur.execute(f"INSERT INTO PROJECTS_SOFTMAKS (name, description, start_date, end_date, status, created_by) VALUES ('{name}', '{description}', '{start}', '{end}', 'NOWY', '{email}');")
+    c.commit()
+    cur.execute(f"SELECT project_id FROM PROJECTS_SOFTMAKS")
+    project_id = cur.fetchall()
+    for email_user in users:
+        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{email_user}');") 
         c.commit()
-        cur.execute(f"SELECT project_id FROM PROJECTS_SOFTMAKS")
-        project_id = cur.fetchall()
-        for email in data[4]:
-            cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{email}');") 
-            c.commit()
-        cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{data[5]}');") 
-        c.commit()
-    except Exception as e:
-        return f"{e}"
+    cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{project_id[-1][0]}', '{email}');") 
+    c.commit()
     
     return True
 
 def delete_project_fcn(data):
+    cur, c = psql_connect()
     project_id = data["id"]
 
-    cur.execute(f"DELETE FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
-    c.commit()
-    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {project_id}")
-    c.commit()
-    cur.execute(f"DELETE FROM COMMENTS WHERE project_id = {project_id}")
+    cur.execute(f"DELETE FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}; DELETE FROM PROJECT_USERS WHERE project_id = {project_id}; DELETE FROM COMMENTS WHERE project_id = {project_id}")
     c.commit()
 
     return True
 
 def get_project_data_fcn(data):
+    cur, c = psql_connect()
     project_id = data["id"]
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS WHERE project_id = {project_id}")
@@ -156,6 +162,7 @@ def get_project_data_fcn(data):
     return json
 
 def update_project_data_fcn(data):
+    cur, c = psql_connect()
     name, description, start, end, status, id, users, email = data["name"], data["description"], data["start"], data["end"], data["status"], data["id"], data["users"], data["email"]
     
     cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{name}' <> '' THEN '{name}' ELSE name END, description = CASE WHEN '{description}' <> '' THEN '{description}' ELSE description END, start_date = CASE WHEN '{start}' <> '' THEN '{start}' ELSE start_date END, end_date = CASE WHEN '{end}' <> '' THEN '{end}' ELSE end_date END, status = CASE WHEN '{status}' <> '' THEN '{status}' ELSE status END WHERE project_id = {id};")
@@ -170,6 +177,7 @@ def update_project_data_fcn(data):
     return True
 
 def add_comment_fcn(data):
+    cur, c = psql_connect()
     comment, id, email, time = data["comment"], data["id"], data["email"], data["time"]
     
     cur.execute(f"INSERT INTO COMMENTS (text, date, user_email, project_id) VALUES ('{comment}', '{time}', '{email}', {id});")
@@ -178,6 +186,7 @@ def add_comment_fcn(data):
     return True
 
 def get_project_details_fcn(data):
+    cur, c = psql_connect()
     project_id = data["id"]
 
     cur.execute(f"SELECT * FROM PROJECTS_SOFTMAKS where project_id = {project_id}")

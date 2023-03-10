@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 
-function ModalEditSecond(props) {
-
-const data_props = [props.name, props.description, props.startdate, props.enddate, props.users, props.email];
+function ModalCreateSecond(props) {
 
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
@@ -10,27 +8,28 @@ const data_props = [props.name, props.description, props.startdate, props.enddat
         const response = await fetch('/api/create_project', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({data: data_props}),
+            body: JSON.stringify({name: props.name, description: props.description, start: props.startdate, end: props.enddate, users: props.users, email: props.email}),
         });
         props.closeModal2(false)
         };
-        useEffect(() => {
-            let toggle = () => {
+        
+    useEffect(() => {
+        let toggle = () => {
 
-                let element = document.getElementById("submit_button_second");
-            
-                if (props.name === '' || 
-                props.description === '' || 
-                props.startdate === '' || 
-                props.enddate === '' || 
-                props.users === '') {
-                   element.setAttribute("hidden", "hidden");
-                } else {
-                    element.removeAttribute("hidden");
-                }
-              }
-              toggle();
-          });
+            let element = document.getElementById("submit_button_second");
+        
+            if (props.name === '' || 
+            props.description === '' || 
+            props.startdate === '' || 
+            props.enddate === '' || 
+            props.users === '') {
+                element.setAttribute("hidden", "hidden");
+            } else {
+                element.removeAttribute("hidden");
+            }
+            }
+            toggle();
+        });
         
     return (
         <div className="modal_bg_second">  
@@ -78,4 +77,4 @@ const data_props = [props.name, props.description, props.startdate, props.enddat
     );
 };
 
-export default ModalEditSecond;
+export default ModalCreateSecond;

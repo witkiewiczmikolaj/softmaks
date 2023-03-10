@@ -78,6 +78,7 @@ function ModalRegister( props ) {
                                 placeholder="Hasło"
                                 value={password}
                                 onChange={handlePasswordChange}
+                                maxLength="64"
                                 required
                             />
                             <input
@@ -85,6 +86,7 @@ function ModalRegister( props ) {
                                 placeholder="Imię:"
                                 value={uname}
                                 onChange={handleUnameChange}
+                                maxLength="64"
                                 required
                             /><br></br>
                             <input
@@ -92,6 +94,7 @@ function ModalRegister( props ) {
                                 placeholder="Nazwisko:"
                                 value={usurname}
                                 onChange={handleUsurnameChange}
+                                maxLength="64"
                                 required
                             /><br></br>
                             <input
@@ -108,6 +111,7 @@ function ModalRegister( props ) {
                                 placeholder="Płeć:"
                                 value={sex}
                                 onChange={handleSexChange}
+                                maxLength="64"
                                 required
                             />
                             <datalist id="sexlist">
@@ -122,6 +126,7 @@ function ModalRegister( props ) {
                                 onChange={handleNumberChange}
                                 min={100000000}
                                 max={999999999}
+                                required
                             /><br></br>
                             <div className="footer">
                                 <button id="cancel_button" onClick={() => props.closeModal(false)}>Anuluj</button>
