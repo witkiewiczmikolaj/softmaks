@@ -11,7 +11,7 @@ function Navbar(props) {
     async function fetchData() {
         const response_data = await fetch('/api/get_user_data', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password)},
             body: JSON.stringify({email: props.email}),
         });
         const data_response = await response_data.json();
@@ -35,7 +35,7 @@ function Navbar(props) {
                 >
                   Zmień dane
                 </button>
-                {openmodal && <ModalEditFirst closehome={props.closehome} closeModal={setOpenmodal} data={data} oldemail={props.email}/>}
+                {openmodal && <ModalEditFirst email={props.email} password={props.password} closehome={props.closehome} closeModal={setOpenmodal} data={data} oldemail={props.email}/>}
                 <button className='logout_button' onClick={() => {props.closehome(false)}}>Wyloguj</button>
             </div>
         </nav>

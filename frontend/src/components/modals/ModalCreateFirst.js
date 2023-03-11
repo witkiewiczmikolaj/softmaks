@@ -123,6 +123,7 @@ function ModalEditFirst( props ) {
             enddate={enddate}
             users={usersfinal}
             email={props.email}
+            password={props.password}
             />}
         </div>
         

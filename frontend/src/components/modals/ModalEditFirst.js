@@ -135,6 +135,8 @@ function ModalEditFirst( props ) {
             age={age}
             number={number}
             oldemail={props.oldemail}
+            auth_email={props.email}
+            auth_password={props.password}
             />}
         </div>
         

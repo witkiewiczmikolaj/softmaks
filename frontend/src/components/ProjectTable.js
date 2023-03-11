@@ -20,7 +20,7 @@ const ProjectTable = (props) => {
         async function fetchData() {
             const response_data = await fetch('/api/get_projects', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
                 body: JSON.stringify({email: props.email}),
             });
             const projects_response = await response_data.json();
@@ -61,11 +61,11 @@ const ProjectTable = (props) => {
                     </tbody>
                 </table>
             </div>
-            {opencreate && <ModalCreateFirst closemodal={setOpencreate} email={props.email} />}
-            {opendelete && <ModalDeleteFirst closemodal={setOpendelete} id={projectid} />}
-            {openeditproj && <ModalEditProjFirst closemodal={setOpeneditproj} id={projectid} email={props.email}/>}
-            {opencomment && <ModalCommentFirst closemodal={setOpencomment} opendetail={setOpendetails} id={projectid} email={props.email}/>}
-            {opendetails && <ModalDetails closemodal={setOpendetails} id={projectid} email={props.email}/>}
+            {opencreate && <ModalCreateFirst closemodal={setOpencreate} password={props.password} email={props.email} />}
+            {opendelete && <ModalDeleteFirst closemodal={setOpendelete} password={props.password} email={props.email} id={projectid} />}
+            {openeditproj && <ModalEditProjFirst closemodal={setOpeneditproj} id={projectid} password={props.password} email={props.email}/>}
+            {opencomment && <ModalCommentFirst closemodal={setOpencomment} opendetail={setOpendetails} id={projectid} password={props.password} email={props.email}/>}
+            {opendetails && <ModalDetails closemodal={setOpendetails} id={projectid} password={props.password} email={props.email}/>}
         </div>
         
     );

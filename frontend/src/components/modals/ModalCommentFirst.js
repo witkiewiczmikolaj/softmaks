@@ -50,6 +50,7 @@ function ModalCommentFirst( props ) {
             comment={comment}
             id={props.id}
             email={props.email}
+            password={props.password}
             />}
         </div>
         

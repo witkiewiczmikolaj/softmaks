@@ -9,7 +9,7 @@ function ModalDetails( props ) {
         async function fetchData() {
             const response_data = await fetch('/api/get_project_details', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
                 body: JSON.stringify({id: props.id}),
             });
             const project_details_response = await response_data.json();

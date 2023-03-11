@@ -1,5 +1,17 @@
 from psql import psql_connect
 from hashlib import sha256
+from flask_httpauth import HTTPBasicAuth
+
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+    password_hash = hash_password(password)
+    if email_check(username):
+        if check_pass(username, password_hash):
+            return True
+
+    return False
 
 def email_check(email):
     cur, c = psql_connect()
@@ -28,7 +40,13 @@ def add_account(data):
     password_hash = hash_password(data["pass"])
     cur.execute(f"INSERT INTO ACCOUNTS_SOFTMAKS (name, surname, password, age, sex, email, number) VALUES ('{name}', '{surname}', '{password_hash}', {age}, '{sex}', '{email}', {number});")
     c.commit()
-    
+
+def get_name(email):
+    cur, c = psql_connect()
+    cur.execute(f"SELECT name FROM ACCOUNTS_SOFTMAKS WHERE email = '{email}'")
+    name = cur.fetchone()
+    return name[0]
+
 def log_in(data):
     email = data["email"]
     password_hash = hash_password(data["pass"])

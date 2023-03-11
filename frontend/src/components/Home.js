@@ -7,8 +7,8 @@ function Home(props) {
 
   return (
     <div className='home_bg'>
-      <Navbar email={props.email} closehome={props.closehome}/>
-      <ProjectTable email={props.email}/>
+      <Navbar password={props.password} email={props.email} closehome={props.closehome}/>
+      <ProjectTable password={props.password} email={props.email}/>
     </div>
   );
 }

@@ -29,6 +29,8 @@ function ModalDeleteFirst( props ) {
             closeModal1={setOpenmodal} 
             closeModal2={props.closemodal}
             id={props.id}
+            password={props.password}
+            email={props.email}
             />}
         </div>
         

@@ -8,7 +8,7 @@ function ModalEditSecond(props) {
         
         const response = await fetch('/api/update_user_data', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.auth_email + ':' + props.auth_password)},
             body: JSON.stringify({name: props.uname, surname: props.usurname, password: props.password, age: props.age, sex: props.sex, email: props.email, number: props.number, oldemail: props.oldemail}),
         });
         props.closeModal2(false)

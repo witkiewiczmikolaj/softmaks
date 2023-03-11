@@ -55,7 +55,7 @@ function ModalEditProjFirst( props ) {
         async function fetchData() {
             const response_data = await fetch('/api/get_project_data', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
                 body: JSON.stringify({id: props.id}),
             });
             const project_data_response = await response_data.json();
@@ -149,6 +149,7 @@ function ModalEditProjFirst( props ) {
             users={usersfinal}
             status={status}
             email={props.email}
+            password={props.password}
             id={props.id}
             />}
         </div>

@@ -7,7 +7,7 @@ function ModalCreateSecond(props) {
         
         const response = await fetch('/api/create_project', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
             body: JSON.stringify({name: props.name, description: props.description, start: props.startdate, end: props.enddate, users: props.users, email: props.email}),
         });
         props.closeModal2(false)

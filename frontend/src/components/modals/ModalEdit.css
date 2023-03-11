@@ -220,10 +220,12 @@ button:hover {
     color: green;
     font-weight: bold;
     word-wrap: break-word;
+    max-width: 98%;
 }
 
 .comment {
     word-wrap: break-word;
+    max-width: 98%;
 }
 
 .name_description {

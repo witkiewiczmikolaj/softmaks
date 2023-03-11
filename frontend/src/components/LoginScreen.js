@@ -24,14 +24,13 @@ function LoginScreen() {
         try{
         const response_login = await fetch('/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(email + ':' + password) },
             body: JSON.stringify({email: email, pass: password}),
         });
         const login = await response_login.json();
         
         if (login === true) {
             setOpenhome(true);
-            setPassword('');
         } else {
             setResponse("Nieprawidłowe dane do logowania");
         }} catch (error) {
@@ -41,7 +40,7 @@ function LoginScreen() {
 
     return (
         <div>
-            {openhome && <Home email={email} closehome={setOpenhome}/>}
+            {openhome && <Home password={password} email={email} closehome={setOpenhome}/>}
             <form className='loginscreen_form' onSubmit={handleSubmit}>
                 <h1 className='welcome'>Zaloguj się:</h1>
                 <input

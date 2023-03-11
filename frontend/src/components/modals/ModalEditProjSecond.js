@@ -8,7 +8,7 @@ function ModalEditProjSecond(props) {
         
         const response = await fetch('/api/update_project_data', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
             body: JSON.stringify({name: props.name, description: props.description, start: props.start, end: props.end, status: props.status, id: props.id, users: props.users, email: props.email}),
         });
         props.closeModal2(false)

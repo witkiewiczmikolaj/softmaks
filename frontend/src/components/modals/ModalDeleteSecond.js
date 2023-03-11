@@ -7,7 +7,7 @@ function ModalDeleteSecond(props) {
         
         const response = await fetch('/api/delete_project', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
             body: JSON.stringify({id: props.id}),
         });
         props.closeModal2(false)

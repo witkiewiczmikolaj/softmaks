@@ -4,14 +4,13 @@ import "./ModalEdit.css";
 function ModalCommentSecond(props) {
 
 const [currentTime, setCurrentTime] = useState("");
-const data_props = [props.comment, props.id, props.email, currentTime];
 
 const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     
     const response = await fetch('/api/add_comment', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(props.email + ':' + props.password) },
         body: JSON.stringify({comment: props.comment, id: props.id, email: props.email, time: currentTime}),
     });
     props.closeModal2(false);
