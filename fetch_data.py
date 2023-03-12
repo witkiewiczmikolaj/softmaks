@@ -87,11 +87,7 @@ def update_user(data):
         cur.execute(f"UPDATE ACCOUNTS_SOFTMAKS SET name = '{name}', surname = '{surname}', password = '{password_hash}', age = {age}, sex = '{sex}', email = '{email}', number = {number} WHERE email = '{oldemail}';")
         c.commit()
 
-    cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
-    c.commit()
-    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET created_by = '{email}' WHERE created_by = '{oldemail}';")
-    c.commit()
-    cur.execute(f"UPDATE COMMENTS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
+    cur.execute(f"UPDATE PROJECT_USERS SET user_email = '{email}' WHERE user_email = '{oldemail}'; UPDATE PROJECTS_SOFTMAKS SET created_by = '{email}' WHERE created_by = '{oldemail}'; UPDATE COMMENTS SET user_email = '{email}' WHERE user_email = '{oldemail}';")
     c.commit()
     return True
 
@@ -183,9 +179,7 @@ def update_project_data_fcn(data):
     cur, c = psql_connect()
     name, description, start, end, status, id, users, email = data["name"], data["description"], data["start"], data["end"], data["status"], data["id"], data["users"], data["email"]
     
-    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{name}' <> '' THEN '{name}' ELSE name END, description = CASE WHEN '{description}' <> '' THEN '{description}' ELSE description END, start_date = CASE WHEN '{start}' <> '' THEN '{start}' ELSE start_date END, end_date = CASE WHEN '{end}' <> '' THEN '{end}' ELSE end_date END, status = CASE WHEN '{status}' <> '' THEN '{status}' ELSE status END WHERE project_id = {id};")
-    c.commit()
-    cur.execute(f"DELETE FROM PROJECT_USERS WHERE project_id = {id}")
+    cur.execute(f"UPDATE PROJECTS_SOFTMAKS SET name = CASE WHEN '{name}' <> '' THEN '{name}' ELSE name END, description = CASE WHEN '{description}' <> '' THEN '{description}' ELSE description END, start_date = CASE WHEN '{start}' <> '' THEN '{start}' ELSE start_date END, end_date = CASE WHEN '{end}' <> '' THEN '{end}' ELSE end_date END, status = CASE WHEN '{status}' <> '' THEN '{status}' ELSE status END WHERE project_id = {id}; DELETE FROM PROJECT_USERS WHERE project_id = {id};")
     c.commit()
     for email_user in users:
         cur.execute(f"INSERT INTO PROJECT_USERS (project_id, user_email) VALUES ('{id}', '{email_user}');") 
